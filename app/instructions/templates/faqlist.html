@@ -1,0 +1,31 @@
+{% set navname = 'navfaq' %}
+{% set title = 'Инструкции' %}
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post" novalidate>
+	{% if session['user']['isadmin'] %}
+	<div class="panel-header">
+		<button type="submit" class="btn btn-link" name="addins">
+			<i class="icon icon-plus"></i> Добавить запись
+		</button>
+	</div>
+	{% endif %}
+	<table>	
+	{% for ins in insall %}
+		<tr>
+			<td><a href={{ url_for('instructions.read_instr', id=ins.id) }} class="btn btn-link"><i class="icon icon-arrow-right"></i><b>{{ ins.name }}</b></a></td>		
+			{% if session['user']['isadmin'] %}
+			
+			<td><button type="submit" class="btn btn-link" name="changeins" value={{ ins.id }}>
+				<i class="icon icon-edit"></i>
+			</button></td>					
+			<td><button type="submit" class="btn btn-link" name= "delins" value = {{ ins.id }}>
+				<i class="icon icon-delete"></i>
+			</button></td>
+							
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+</form>
+{% endblock %}

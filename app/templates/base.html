@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre.css') }}" type="text/css" >
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-exp.css') }}" type="text/css" >
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-icons.css') }}" type="text/css" >
+		{% if session['user']['isadmin'] %}
+		<script src="{{ url_for('static',filename='tinymce/tinymce.min.js') }}"></script>		
+  		<script>tinymce.init({
+  									selector:'textarea',   
+  									plugins: ["advlist autolink lists link image charmap print preview anchor", 
+  												"link searchreplace visualblocks code fullscreen insertdatetime",
+  												"media table paste code help wordcount"],
+  									toolbar: 'undo redo | formatselect | ' +
+  												' bold italic backcolor | alignleft aligncenter ' +
+  												' alignright alignjustify | bullist numlist outdent indent |' +
+  												' removeformat | link | help',
+  									language: "ru"
+									});
+		</script>
+  		{% endif %}
+  	</head>
+	<body>
+		{#{{ g['linksall'] }}#}
+		{#{{ session['sid'] }}#}
+		<div class="container">
+			<div class="columns">
+				{% if session['user'] %}
+					<div class="column col-2 col-ml-auto">
+						<span class="label label-secondary">пользователь: {{ session['user']['username'] }}</span>
+						<a name='exit' href='/logout' class="btn-link">Выход</a>
+					</div>
+				{% else %}
+					<div class="column col-1 col-ml-auto">
+						<a name='exit' href='/login' class="btn-link">Вход</a>
+					</div>
+				{% endif %}
+			</div>
+			{#<div class="columns">
+				<div class="column col-2 col-ml-auto">
+					{% if session['user']['isadmin'] %}
+						{% if navname == 'navadm' %}
+							<a name="navadm" href="/admin" class="btn active">Администрирование</a>
+						{% else %}
+							<a name="navadm" href="/admin" class="btn btn-link">Администрирование</a>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>#}
+			<div class="columns">
+				<div class="column col-6 col-mx-auto">
+					<div class="column col-8 p-centered">
+						<h1>Техническая страница ИООД</h1> 
+					</div> 
+					<nav class="navbar">
+						<section class="navbar-section">
+							{% if navname == 'navindex' %}
+								<a name="navindex" href="/" class="btn active">Главная</a>
+							{% else %}
+								<a name="navindex" href="/" class="btn btn-link">Главная</a>
+							{% endif %}
+							{#{% if navname == 'navzayavki' %}							
+								<a name="navzayavki" href="..." class="btn active">Заявки</a>
+							{% else %}
+								<a name="navzayavki" href="..." class="btn btn-link">Заявки</a>
+							{% endif %}#}
+							{% if navname == 'navfaq' %}							
+								<a name="navfaq" href="/instructions" class="btn active">Инструкции</a>
+							{% else %}
+								<a name="navfaq" href="/instructions" class="btn btn-link">Инструкции</a>
+							{% endif %}
+							{% if session['user']['isadmin'] %}
+								{% if navname == 'navadm' %}
+									<a name="navadm" href="/admin" class="btn active">Администрирование</a>
+								{% else %}
+									<a name="navadm" href="/admin" class="btn btn-link">Администрирование</a>
+								{% endif %}
+							{% endif %}
+						</section>
+					</nav>
+				</div>
+			</div>
+			<br>		
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>

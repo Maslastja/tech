@@ -1,0 +1,36 @@
+{% extends "admin.html" %}
+{% set subname="users" %}
+{% block body %}
+	<div class="column col-8 col-mr-auto">
+		{% with messages = get_flashed_messages() %}
+		   {% if messages %}
+		      {% for message in messages %}
+		         {{ message }}
+		      {% endfor %}
+		   {% endif %}
+		{% endwith %}
+		<button type="submit" class="btn btn-link" name="adduser"><i class="icon icon-plus"></i> Добавить</button>
+		<table class="table-sm table-striped table-hover">
+			<tr>
+				<th>№</th>
+				<th>логин</th>
+			</tr>
+			{% for u in users %}
+				<tr>
+					<td>{{ u.ind }}</td>
+					<td>{{ u.username }}</td>
+					{#<td>
+						<button type="submit" class="btn btn-link" name="changesub" value={{ u.id }}>
+							<i class="icon icon-edit"></i>
+						</button>					
+					</td>#}						
+					<td>
+						<button type="submit" class="btn btn-link" name= "delsub" value = {{ u.id }}>
+							<i class="icon icon-delete"></i>
+						</button>					
+					</td>						
+				</tr>
+			{% endfor %}
+		</table>        
+	</div> 
+{% endblock %}

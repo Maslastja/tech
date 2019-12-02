@@ -1,0 +1,124 @@
+{% set navname = 'navindex' %}
+{% extends "base.html" %}
+{% block content %}
+<div class="columns">			
+	<div class="column col-2">
+		<div class="accordion">
+			<input id="accordion-1" type="checkbox" name="accordion-checkbox" checked="" hidden="">
+			<label class="accordion-header c-hand bg-secondary" for="accordion-1"><b>Ссылки ИООД</b></label>
+			<div class="accordion-body">
+				<ul class="menu menu-nav">
+					{% for l in linksall['ood'] %}					   
+					<li class="menu-item">
+					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="accordion">
+			<input id="accordion-2" type="checkbox" name="accordion-checkbox" checked="" hidden="">
+			<label class="accordion-header c-hand bg-secondary" for="accordion-2"><b>Видеонаблюдение</b></label>
+			<div class="accordion-body">
+				<ul class="menu menu-nav">
+					{% for l in linksall['video'] %}					   
+					<li class="menu-item">
+					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="accordion">
+			<input id="accordion-3" type="checkbox" name="accordion-checkbox" checked="" hidden="">
+			<label class="accordion-header c-hand bg-secondary" for="accordion-3"><b>Файлы</b></label>
+			<div class="accordion-body">
+				<ul class="menu menu-nav">
+					{% for l in linksall['files'] %}					   
+					<li class="menu-item">
+					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="column col-8">
+		<form action="" method="post" novalidate>
+		<nav class="navbar">
+			<section class="navbar-section">
+				{% if type_id == 0 %}
+					<span class="chip"><a href="/" class="btn btn-link active">#все</a></span>
+				{% else %}					
+					<a href="/" class="btn btn-link">#все</a>
+				{% endif %}				
+				{% for t in typesall %}
+					{% if type_id == t.id %}
+						<span class="chip"><a href={{ "/?type_id="+t.id|string }} class="btn btn-link active">{{ "#"+t.typename }}</a></span>
+					{% else %}
+						<a href={{ "/?type_id="+t.id|string }} class="btn btn-link">{{ "#"+t.typename }}</a>
+					{% endif %}
+				{% endfor %}
+			</section>
+		</nav>
+		{% if session['user']['isadmin'] %}
+		<div class="panel-header">
+			<button type="submit" class="btn btn-link" name="addnews">
+				<i class="icon icon-plus"></i> Добавить запись
+			</button>
+		</div>
+		{% endif %}
+		{% for n in newsall %}
+			<ul class="menu">
+				<div class="title bg-secondary">
+					<div class="column col-ml-auto"><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>
+				</div>
+				<div class="columns">
+				<div class="column">
+				{{ n.text|safe }}
+				</div>
+				{% if session['user']['isadmin'] %}
+					<div class="column  col-1">
+						<button type="submit" class="btn btn-link" name="changenews" value={{ n.id }}>
+							<i class="icon icon-edit"></i>
+						</button>					
+						<button type="submit" class="btn btn-link" name= "delnews" value = {{ n.id }}>
+							<i class="icon icon-delete"></i>
+						</button>
+					</div>					
+				{% endif %}
+				</div>
+			</ul>	
+		{% endfor %}
+		</form>
+	</div>
+	<div class="column col-2">
+		<div class="accordion">
+			<input id="accordion-4" type="checkbox" name="accordion-checkbox" checked="" hidden="">
+			<label class="accordion-header c-hand bg-secondary" for="accordion-4"><b>Ссылки Здравоохранение</b></label>
+			<div class="accordion-body">
+				<ul class="menu menu-nav">
+					{% for l in linksall['zdrav'] %}					   
+					<li class="menu-item">
+					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="accordion">
+			<input id="accordion-5" type="checkbox" name="accordion-checkbox" checked="" hidden="">
+			<label class="accordion-header c-hand bg-secondary" for="accordion-5"><b>Дополнительные ссылки</b></label>
+			<div class="accordion-body">
+				<ul class="menu menu-nav">
+					{% for l in linksall['dop'] %}					   
+					<li class="menu-item">
+					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

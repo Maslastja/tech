@@ -1,0 +1,41 @@
+{% extends "admin.html" %}
+{% block body %}
+	<div class="columns">	
+		<div class="column col-8 col-mr-auto">
+			<button type="submit" class="btn btn-link" name="addlink"><i class="icon icon-plus"></i> Добавить</button>
+			{% with messages = get_flashed_messages() %}
+			   {% if messages %}
+			      {% for message in messages %}
+			         {{ message }}
+			      {% endfor %}
+			   {% endif %}
+			{% endwith %}
+			<table class="table table-striped table-hover">
+				<tr>
+					<th>наименование</th>
+					<th>полный адрес</th>
+					<th>тип</th>
+					<th></th>
+					<th></th>
+				</tr>
+				{% for l in links %}
+					<tr>
+						<td>{{ l.linkname }}</td>
+						<td>{{ l.fullname }}</td>
+						<td>{{ l.typelink }}</td>
+						<td>
+							<button type="submit" class="btn btn-link" name="changesub" value={{ l.id }}>
+								<i class="icon icon-edit"></i>
+							</button>					
+						</td>						
+						<td>
+							<button type="submit" class="btn btn-link" name= "delsub" value = {{ l.id }}>
+								<i class="icon icon-delete"></i>
+							</button>					
+						</td>						
+					</tr>
+				{% endfor %}
+			</table>        
+		</div> 
+	</div>
+{% endblock %}

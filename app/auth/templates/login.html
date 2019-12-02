@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre.css') }}" type="text/css" >
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-exp.css') }}" type="text/css" >
+		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-icons.css') }}" type="text/css" >
+	</head>
+	<body>
+		<div class="column col-8 col-mx-auto">
+			<div class="column col-5 col-mx-auto">
+				<h1>Введите логин и пароль</h1>
+				<form action="" method="post" novalidate>
+					<div class="form-group">		               
+						<div class="column col-8 col-mx-auto">
+							{{ form.username.label(class_="form-label") }}
+							{{ form.username(class_="form-input") }}
+							{% for error in form.username.errors %}
+								<span class="form-input-hint">{{ error }}</span>
+							{% endfor %}
+						</div>
+						<div class="column col-8 col-mx-auto">
+							{{ form.password.label(class_="form-label") }}
+							{{ form.password(class_="form-input") }}
+							{% for error in form.password.errors %}
+								<span class="form-input-hint">{{ error }}</span>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="column col-8 col-mx-auto">
+						<button type="submit" class="btn" name="enter">Войти</button>
+						<button type="submit" class="btn" name="back">Отмена</button>
+					</div>
+				</form>
+			</div>
+		</div> 
+	</body>
+</html>
