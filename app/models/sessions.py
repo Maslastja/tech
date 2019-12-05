@@ -10,7 +10,7 @@ class SessionsStore(db.Model):
        DateLastReq = pw.DateTimeField()
        
        class Meta:
-              db_table = "sessions"
+              db_table = 'sessions'
         
        
        

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set navname="navindex" %}
 {% block content %}
 	<div class="column col-8">
 		<h4>{{ title }}</h4>
@@ -12,20 +13,20 @@
 		<form action="" method="post" novalidate>
 			<div class="form-group">
 				{% for field in form %}
-					<div class="column col-3">
+					<div class="column col-10">
 						{{ field.label }} 
 						{{ field }}
 						{% for error in field.errors %}
 						<span class="text-error">[{{ error }}]</span>
 						{% endfor %}
-					</div>
+					</div><br>
 				{% endfor %}
 			<br>
-			{% if text != '' %}
-				<textarea name="text">{{ text }}</textarea>	
+			{#{% if text != '' %}
+				<textarea name="text" id="redactor">{{ text }}</textarea>	
 			{% else %}	
-				<textarea name="text"></textarea>
-			{% endif %}	
+				<textarea name="text" id="redactor"></textarea>
+			{% endif %}#}	
 			</div>
 			<div class="panel-footer">
 				<button type="submit" class="btn btn-primary" name="save">Сохранить</button>

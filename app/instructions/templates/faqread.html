@@ -1,7 +1,7 @@
 {% set navname = 'navfaq' %}
 {% extends "base.html" %}
 {% block content %}
-	<a href="/instructions" class="btn btn-link"><i class="icon icon-back"></i> Назад</a><br>
+	<a href={{ url_for('instructions.start_page') }} class="btn btn-link"><i class="icon icon-back"></i> Назад</a><br>
 	<b>{{ ins.name }}</b><br>
 	{{ ins.text|safe }}
 {% endblock %}

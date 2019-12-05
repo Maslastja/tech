@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.exceptions import NotFound
 from config.database import db
-from app.utils import logapp, register_bp, format_datetime
+from app.utils import logapp, register_bp
 from app.sessions import MyDatabaseSessionInterface
 
 def create_app():
@@ -16,7 +16,7 @@ def create_app():
               logapp(app)
        
        app.session_interface = MyDatabaseSessionInterface()
-       app.jinja_env.filters['formatdatetime'] = format_datetime 
+       #app.jinja_env.filters['formatdatetime'] = format_datetime 
        
        @app.before_request
        def before_request():

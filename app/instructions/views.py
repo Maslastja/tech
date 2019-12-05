@@ -11,16 +11,15 @@ def get_instr():
 def start_page():
     insall = get_instr()
     
+    resp = render_template('faqlist.html', title='Инструкции',
+                           insall = insall)
     if request.method == 'POST':        
-        if 'changeins' in request.form:
-            print(request.form)
-                 
-            dictform = dict(request.form)
+        dictform = dict(request.form)
+        if 'changeins' in request.form:                 
             valuesub = dictform['changeins']
             resp = redirect(url_for('instructions.open_ins', id=valuesub))
         
         if 'delins' in request.form:
-            dictform = dict(request.form)
             valuesub = int(dictform['delins'])
             result = Instruction.delete_by_id(valuesub)
             resp = redirect(url_for('instructions.start_page'))
@@ -28,10 +27,7 @@ def start_page():
         if 'addins' in request.form:
             resp = redirect(url_for('instructions.open_ins'))
             
-        return resp
-
-    return render_template('faqlist.html', title='Инструкции',
-                           insall = insall)
+    return resp
     
 def open_ins():
     if 'back' in request.form:

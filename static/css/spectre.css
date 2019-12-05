@@ -540,19 +540,13 @@ html:lang(ko),
   white-space: nowrap;
 }
 
-/* old version
+
 .table td,
 .table th {
   border-bottom: .05rem solid #dadee4;
   padding: .6rem .4rem;
 }
-}*/
 
-.table td,
-.table th {
-  border-bottom: .05rem solid #dadee4;
-  padding: .1rem .1rem;
-}
 
 .table th {
   border-bottom-width: .1rem;
@@ -707,24 +701,13 @@ html:lang(ko),
 }
 
 
-/* old version
 .btn.btn-link:focus,
 .btn.btn-link:hover,
 .btn.btn-link:active,
 .btn.btn-link.active {
   color: #302ecd;
-}*/
-
-.btn.btn-link:focus,
-.btn.btn-link:hover {
-  color: #302ecd;
 }
 
-.btn.btn-link:active,
-.btn.btn-link.active {
-	background: #eef0f3;  
-  color: #302ecd;
-}
 
 .btn.btn-sm {
   font-size: .7rem;

@@ -4,6 +4,7 @@ from app.models.links import Link
 from app.models.news import News
 from app.models.instructions import Instruction
 from app.models.types import TypeLinks, TypeNews
+from app.models.calendar import Calendar
 
 def all_models():
     ArModels = []
@@ -11,6 +12,7 @@ def all_models():
     ArModels.append(User)
     ArModels.append(TypeLinks)
     ArModels.append(TypeNews)
+    ArModels.append(Calendar)
     
     #зависимые таблицы
     ArModels.append(SessionsStore)
@@ -24,7 +26,5 @@ def one_model(name):
     ArModels = all_models()
     for mod in ArModels:
         if name == mod.__name__:
-            #print(name)
             return mod
-    else:
-        return None
+    return None

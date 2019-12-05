@@ -24,7 +24,8 @@ class MyDatabaseSession(CallbackDict, SessionMixin):
         result = (SessionsStore.delete()
                   .where(SessionsStore.token == self.sid)
                   .execute())
-    
+        self.clear()
+        
     def change_last_req(self):
         s = SessionsStore.get(SessionsStore.token == self.sid)
         s.DateLastReq = datetime.today()

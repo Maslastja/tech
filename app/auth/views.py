@@ -31,7 +31,6 @@ def login():
 def logout():
     #удалить информацию о сессии из бд
     session.delete_session()
-    session.clear()
     resp = redirect('/')
     
     return resp

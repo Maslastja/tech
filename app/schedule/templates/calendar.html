@@ -1,0 +1,70 @@
+{% set navname = 'navschedule' %}
+{% set daysname = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'] %}
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post" novalidate>
+	<nav class="navbar">
+		<section class="navbar-section">
+			{% if session['user']['isadmin'] %}
+				<button class="btn btn-primary" name="addevent"><i class="icon icon-plus"></i></button>
+				<button class="btn btn-link btn-action" name="changesub"><i class="icon icon-edit"></i></button>	
+				<button class="btn btn-link btn-action" name="delsub"><i class="icon icon-delete"></i></button>
+				<button class="btn btn-link btn-action" type="reset"><i class="icon icon-cross"></i></button>
+			{% endif %}
+			<a class="btn btn-link" name="prev" href={{ url_for('calendar.start_page', prev=days[0]) }}><i class="icon icon-back"></i> Пред. неделя</a>	
+			<a class="btn btn-link" name="next" href={{ url_for('calendar.start_page', next=days[6]) }}>След. неделя <i class="icon icon-forward"></i></a>
+		</section>
+	</nav>
+	<br>
+	
+	<div class="columns col-gapless">
+		{#{% for d in sch %}
+			<div class="column col-2">				
+				<div class="panel">
+					<div class="panel-header text-center">
+						<div class="panel-title h5 mt-10">{{ d.strftime("%d.%m.%Y") }}</div>
+						<span>{{ daysname[days.index(d)] }}</span>
+					</div>
+					<div class="panel-body">
+						<div class="tile tile-centered">
+							<div class="tile-content">
+								<table class="table">
+									{% for ev in sch.get(d) %}									
+										<tr>
+											<td><div class="tile-title text-bold">{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</div></td>
+											<td><div>{{ ev.event }}</div></td>
+											{% if session['user']['isadmin'] %}
+												<td><input type="radio" name="evid" value={{ ev.id }}></td>									
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</table>#}
+								<table class="tablesch table-scroll">
+									{% set min = '00' %}
+									<th></th>	
+									{% for d in sch %}
+										<th class="format">{{ d.strftime("%d.%m.%Y") }}<br>{{ daysname[days.index(d)] }}</th>
+									{% endfor %}
+									{% for t in times %}	
+										<tr>											
+											<td>
+											{% if t.strftime("%M") == min %}
+												{{ t.strftime("%H:%M") }}
+											{% endif %}
+											</td>										
+											{% for d in sch %}
+												<td></td>
+											{% endfor %}
+										</tr>
+									{% endfor %}							
+								</table>
+							{#</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}#}
+	</div>
+	
+</form>
+{% endblock %}

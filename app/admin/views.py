@@ -14,13 +14,11 @@ def get_users():
     resp = render_template('userslist.html', users=users, subname='users',
                            title='Список пользователей')
     if request.method == 'POST':
-        if 'changesub' in request.form:
-            dictform = dict(request.form)
+        dictform = dict(request.form)        if 'changesub' in request.form:
             valuesub = dictform['changesub']
             resp = redirect(url_for('admin.open_user', id=valuesub))
         
         if 'delsub' in request.form:
-            dictform = dict(request.form)
             valuesub = int(dictform['delsub'])
             for_del = check_for_del_user(valuesub)
             if for_del:
@@ -49,7 +47,7 @@ def open_user():
         if arg_id is not None:
             u = user
             u.username=form.username.data
-            u.isadmin=form.isadmin.data,
+            u.isadmin=form.isadmin.data
             u.isactive=form.isactive.data
         else:    
             u = User(username=form.username.data,
@@ -85,14 +83,13 @@ def get_types(tab):
                            title='Список типов')
     
     if request.method == 'POST':
+        dictform = dict(request.form)
         if 'changesub' in request.form:
-            dictform = dict(request.form)
             valuesub = dictform['changesub']
             resp = redirect(url_for('admin.open_type', id=valuesub, tab=tab))
         
         if 'delsub' in request.form:
             table = TypeNews if tab == 'news' else TypeLinks
-            dictform = dict(request.form)
             valuesub = int(dictform['delsub'])
             for_del = check_for_del(tab, valuesub)
             if for_del:
@@ -100,8 +97,7 @@ def get_types(tab):
             
             if tab == 'news':
                 return redirect(url_for('admin.get_types_news'))
-            else:
-                return redirect(url_for('admin.get_types_links'))
+            return redirect(url_for('admin.get_types_links'))
         
         if 'addtype' in request.form:
             resp = redirect(url_for('admin.open_type', tab=tab))
@@ -121,8 +117,7 @@ def open_type():
     if 'back' in request.form:
         if arg_tab == 'news':
             return redirect(url_for('admin.get_types_news'))
-        else:
-            return redirect(url_for('admin.get_types_links'))
+        return redirect(url_for('admin.get_types_links'))
     
     table = TypeNews if arg_tab == 'news' else TypeLinks
     arg_id = request.args.get('id')
@@ -151,8 +146,7 @@ def open_type():
         
         if arg_tab == 'news':
             return redirect(url_for('admin.get_types_news'))
-        else:
-            return redirect(url_for('admin.get_types_links'))
+        return redirect(url_for('admin.get_types_links'))
     
     return render_template('elemform.html', form=form, title = titleform,
                            subname=f'type{arg_tab}')
@@ -163,13 +157,11 @@ def get_links():
     resp = render_template('linkslist.html', links=links, subname='links', 
                            title='Список ссылок')
     if request.method == 'POST':
-        if 'changesub' in request.form:
-            dictform = dict(request.form)
+        dictform = dict(request.form)        if 'changesub' in request.form:
             valuesub = dictform['changesub']
             resp = redirect(url_for('admin.open_link', id=valuesub))
         
         if 'delsub' in request.form:
-            dictform = dict(request.form)
             valuesub = int(dictform['delsub'])
             result = Link.delete_by_id(valuesub)
             return redirect(url_for('admin.get_links'))

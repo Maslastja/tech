@@ -16,15 +16,12 @@ def start_page():
         type_id = 0
     
     if request.method == 'POST':        
+        dictform = dict(request.form)
         if 'changenews' in request.form:
-            print(request.form)
-                 
-            dictform = dict(request.form)
             valuesub = dictform['changenews']
             resp = redirect(url_for('index.open_news', id=valuesub))
         
         if 'delnews' in request.form:
-            dictform = dict(request.form)
             valuesub = int(dictform['delnews'])
             result = News.delete_by_id(valuesub)
             resp = redirect(url_for('index.start_page'))

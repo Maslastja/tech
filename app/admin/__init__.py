@@ -20,6 +20,6 @@ bp.add_url_rule('/links/link', view_func=views.open_link,
                 methods=['GET', 'POST'])
  
 @bp.route('/')
-def admin():
+def start_page():
     return render_template('admin.html', title='Администрирование')
 

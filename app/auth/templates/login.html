@@ -3,9 +3,9 @@
 	<head>
 		<title>{{ title }}</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre.css') }}" type="text/css" >
-		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-exp.css') }}" type="text/css" >
-		<link rel="stylesheet" href="{{ url_for('static',filename='spectre/spectre-icons.css') }}" type="text/css" >
+		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre.css') }} type="text/css" >
+		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-exp.css') }} type="text/css" >
+		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-icons.css') }} type="text/css" >
 	</head>
 	<body>
 		<div class="column col-8 col-mx-auto">

@@ -1,0 +1,52 @@
+.tablesch {
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left; 
+  width: 100%;
+}
+
+.tablesch.table-striped tbody tr:nth-of-type(odd) {
+  background: #f7f8f9;
+}
+
+.tablesch tbody tr.active,
+.tablesch.table-striped tbody tr.active {
+  background: #eef0f3;
+}
+
+.tablesch.table-hover tbody tr:hover {
+  background: #eef0f3;
+}
+
+.tablesch.table-scroll {
+  display: block;
+  overflow-x: auto;
+  padding-bottom: .75rem;
+  white-space: nowrap;
+}
+
+
+
+.tablesch th {
+  border-bottom: .05rem solid #dadee4;
+  padding: .6rem .4rem;
+  text-align: center;
+}
+
+.tablesch th.format {
+  border-bottom: .05rem solid #dadee4;
+  padding: .1rem .1rem;
+  width: 300px;
+  text-align: center;
+}
+
+.tablesch td {
+  border-bottom: .05rem solid #dadee4;
+  padding: .1rem .1rem;
+  
+}
+
+
+.tablesch th {
+  border-bottom-width: .1rem;
+}

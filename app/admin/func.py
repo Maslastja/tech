@@ -54,8 +54,7 @@ def find_all_links():
           Link.linkname,
           Link.fullname,
           TypeLinks.typename.alias('typelink'))
-          .join(TypeLinks, JOIN.LEFT_OUTER, 
-                on=(TypeLinks.id == Link.typelink_id))
+          .join(TypeLinks)
           .order_by(Link.typelink, Link.linkname)
           .namedtuples())
     

@@ -3,7 +3,7 @@ from . import views
 from app.models.instructions import Instruction
 
 bp = Blueprint('instructions', __name__, template_folder='templates',
-               static_folder='static', static_url_path='/instructions/static')
+               static_folder='static')
 options = {'url_prefix': '/instructions'}
 
 bp.add_url_rule('/', view_func=views.start_page,

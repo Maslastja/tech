@@ -31,16 +31,16 @@ def register_bp(app):
                 module = importlib.import_module(f'{address}.{d}')
                 if hasattr(module, 'bp'):
                     bp = module.bp
+                    opt = {}
                     if hasattr(module, 'options'):
                         opt = module.options
-                    else:
-                        opt = {}
+                        
                     app.register_blueprint(bp, **opt)
             except (ImportError, TypeError) as e:
                 #app.logger.exception(e)
                 #print(f'{address}.{d}')
-                if d == 'index':
-                    module = importlib.import_module(f'{address}.{d}')
+                #if d == 'schedule':
+                    #module = importlib.import_module(f'{address}.{d}')
                 continue
 
 #декоратор ограничения использования функций только авториз. пользователей
@@ -52,8 +52,8 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-#формат времени для шаблонов jinja2
-def format_datetime(value, format="%d.%m.%Y %H:%M"):
-    if value is None:
-        return ""
-    return value.strftime(format)
+##формат времени для шаблонов jinja2
+#def format_datetime(value, format="%d.%m.%Y %H:%M"):
+    #if value is None:
+        #return ""
+    #return value.strftime(format)

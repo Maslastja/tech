@@ -16,12 +16,11 @@ class LoginForm(Form):
         if len(user) == 0:
             self.username.errors=('Неверный логин',)
             return False
-        else:
-            usr = user.get()
-            if not usr.check_password(self.password.data):
-                self.password.errors=('Неверный пароль',)
-                return False
-            else:
-                return True
+        
+        usr = user.get()
+        if not usr.check_password(self.password.data):
+            self.password.errors=('Неверный пароль',)
+            return False
+        return True
     
         

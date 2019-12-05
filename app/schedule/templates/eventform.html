@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% set navname="navfaq" %}
+{% set navname="navschedule" %}
 {% block content %}
 	<div class="column col-8">
 		<h4>{{ title }}</h4>
@@ -10,28 +10,21 @@
 				{% endfor %}
 			{% endif %}
 		{% endwith %}
-		<form action="" method="post" novalidate>
-		<div class="form-group">
+	<form action="" method="post" novalidate class="form-horizontal">
 			{% for field in form %}
-				<div class="column col-10">
-					{{ field.label }} 
-					{{ field }}
-					{% for error in field.errors %}
+			<div class="column">
+				{{ field.label }} 
+				{{ field }} 
+				{% for error in field.errors %}
 					<span class="text-error">[{{ error }}]</span>
-					{% endfor %}
-				</div>
+				{% endfor %}
+			</div>
+			<br>
 			{% endfor %}
-		<br>
-		{#{% if text != '' %}
-			<textarea name="text" id="redactor">{{ text }}</textarea>	
-		{% else %}	
-			<textarea name="text" id="redactor"></textarea>
-		{% endif %}#}	
-		</div>
 		<div class="panel-footer">
 			<button type="submit" class="btn btn-primary" name="save">Сохранить</button>
 			<button type="submit" class="btn" name="back">Отмена</button>
 		</div>
-		</form>
-	</div> 
+	</form>	 
+	</div>
 {% endblock %}

@@ -54,9 +54,9 @@
 				{% endif %}				
 				{% for t in typesall %}
 					{% if type_id == t.id %}
-						<span class="chip"><a href={{ "/?type_id="+t.id|string }} class="btn btn-link active">{{ "#"+t.typename }}</a></span>
+						<span class="chip"><a href={{ url_for('index.start_page', type_id = t.id) }} class="btn btn-link active">{{ "#"+t.typename }}</a></span>
 					{% else %}
-						<a href={{ "/?type_id="+t.id|string }} class="btn btn-link">{{ "#"+t.typename }}</a>
+						<a href={{ url_for('index.start_page', type_id = t.id) }} class="btn btn-link">{{ "#"+t.typename }}</a>
 					{% endif %}
 				{% endfor %}
 			</section>
@@ -71,7 +71,8 @@
 		{% for n in newsall %}
 			<ul class="menu">
 				<div class="title bg-secondary">
-					<div class="column col-ml-auto"><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>
+					{#<div class="column col-ml-auto"><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>#}
+					<div class="column col-ml-auto"><b>{{ n.createdate.strftime("%d.%m.%Y %H:%M") }} {{ n.name }}</b></div>
 				</div>
 				<div class="columns">
 				<div class="column">

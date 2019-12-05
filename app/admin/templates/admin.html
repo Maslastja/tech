@@ -6,24 +6,24 @@
 		<div class="column col-2 col-mr-auto">
 			<ul class="menu">
 				{% if subname =='typenews' %}
-					<li class="tab-item"><a class="btn btn-link active" name='typenews' href='/admin/type/news'>Тип новостей</a></li>
+					<li class="tab-item"><a class="btn btn-primary" name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='typenews' href='/admin/type/news'>Тип новостей</a></li>
+					<li class="tab-item"><a class="btn btn-link" name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
 				{% endif %}
 				{% if subname =='links' %}
-					<li class="tab-item"><a class="btn btn-link active" name='links' href='/admin/links'>Ссылки</a></li>
+					<li class="tab-item"><a class="btn btn-primary" name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='links' href='/admin/links'>Ссылки</a></li>
+					<li class="tab-item"><a class="btn btn-link" name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
 				{% endif %}
 				{% if subname =='typelinks' %}
-					<li class="tab-item"><a class="btn btn-link active" name='typelinks' href='/admin/type/links'>Тип ссылок</a></li>
+					<li class="tab-item"><a class="btn btn-primary" name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='typelinks' href='/admin/type/links'>Тип ссылок</a></li>
+					<li class="tab-item"><a class="btn btn-link" name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
 				{% endif %}
 				{% if subname =='users' %}
-					<li class="tab-item"><a class="btn btn-link active" name='users' href='/admin/users'>Пользователи</a></li>
+					<li class="tab-item"><a class="btn btn-primary" name='users' href={{ url_for('admin.get_users') }}>Пользователи</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='users' href='/admin/users'>Пользователи</a></li>
+					<li class="tab-item"><a class="btn btn-link" name='users' href={{ url_for('admin.get_users') }}>Пользователи</a></li>
 				{% endif %}
 			</ul>
 		</div>
