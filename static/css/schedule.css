@@ -1,0 +1,41 @@
+table_extra {
+	table-layout: fixed;
+}
+
+.table_extra td {
+  border: .0rem solid;
+  border-right: .05rem solid #ccccff;  
+  padding: .1rem .1rem;
+ word-wrap: break-word;
+
+}
+
+
+.table_extra th.format {
+  border-bottom: .05rem solid #ccccff;
+  padding: .1rem .1rem;
+  text-align: center;
+}
+
+.table_extra td.small {
+   width: 14%;
+}
+
+.table_extra td.special {
+  border-top: .05rem solid #ccccff;
+  width: 14%;
+}
+
+.table_extra td.active {
+ font-size: 14px;
+ border: .05rem solid #ccccff;  
+ width: 14%;
+ /*background-color: #e6e6ff;
+ background-clip: padding-box;*/
+  
+}
+
+.table_extra td.time {
+  width: 2%; 
+}
+

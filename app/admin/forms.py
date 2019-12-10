@@ -27,9 +27,9 @@ def validate_time(form, field):
     d = form.day.data.strftime('%Y-%m-%d')
     sel = Calendar.select().where(Calendar.day == d)
     for ev in sel:
-        if ((field.name == 'timestart' and 
+        if ((field.name == 'timestart' and field.object_data != field.data and
             field.data >= ev.timestart and field.data < ev.timeend) or
-           (field.name == 'timeend' and 
+           (field.name == 'timeend' and field.object_data != field.data and 
             field.data > ev.timestart and field.data <= ev.timeend)):
             raise ValidationError('Указанное время занято')   
     
@@ -94,7 +94,6 @@ CalendarForm = model_form(Calendar,
                                              validate_time]),
                        'event': dict(label='мероприятие', 
                                    validators=[DataRequired('значение не заполнено')]),
-                       'resp': dict(label='ответственный', 
-                                   validators=[DataRequired('значение не заполнено')]),
+                       'resp': dict(label='ответственный'),
                        'comment': dict(label='комментарий')
                        })

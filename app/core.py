@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.exceptions import NotFound
-from config.database import db
+from config.database import db, Collect
 from app.utils import logapp, register_bp
 from app.sessions import MyDatabaseSessionInterface
 
@@ -11,6 +11,7 @@ def create_app():
                    template_folder='app/templates')
        app.config.from_object('config.settings')
        db.init_app(app)
+       db.database.aggregate('collect')(Collect)       
        register_bp(app)
        if not app.debug:
               logapp(app)

@@ -1,3 +1,5 @@
+import json
+import peewee as pw
 from flask import render_template, request, flash, redirect, url_for, session
 from datetime import date, timedelta, datetime, time
 from app.models.calendar import Calendar
@@ -39,38 +41,88 @@ def get_week(prevw=None, nextw=None):
     #print(days)
     return days
 
+def times():
+    timet = datetime(1,1,1,8)
+    td = timedelta(minutes=5)
+    times = []
+    while timet <= datetime(1,1,1,16,30):
+        times.append(timet.time())
+        timet = timet+td
+    
+    return times
+
 def get_schedule(prevw=None, nextw=None):
     days = get_week(prevw, nextw)
-    
     sch = {}
+    timeslist = times()
+        #for t in times:
+    qs = (Calendar.select(Calendar.day, pw.fn.collect(Calendar.id,
+                                                     Calendar.timestart,
+                                                     Calendar.timeend,
+                                                     Calendar.event,
+                                                     Calendar.comment,
+                                                     Calendar.resp
+                                                     ).alias('events'))
+          .where(Calendar.day.between(days[0], days[6])) 
+          .group_by(Calendar.day)
+          .order_by(Calendar.day, Calendar.timestart)
+          .dicts())
+    
     for d in days:
-        sel = (Calendar
-           .select()
-           .where(Calendar.day == d)
-           .order_by(Calendar.timestart))
-        sch[d] = list(sel)
+        sch[d] = {}
+    
+    for q in qs:
+        events=json.loads(q['events'])
+        dict_for_order={}
+        for ev in events:
+            ev['timestart'] = datetime.strptime(ev['timestart'], '%H:%M:%S').time()
+            ev['timeend'] = datetime.strptime(ev['timeend'], '%H:%M:%S').time()
+            ev['evtime'] = [t for t in timeslist if (t >= ev['timestart'] and t < ev['timeend'])]
+            dict_for_order[ev['timestart']]=ev
+            
+        list_keys = list(dict_for_order.keys())
+        list_keys.sort()
+        events = []
+        for i in list_keys:
+            events.append(dict_for_order[i])
+        sch[q['day']]=events
+        #print(events)
+    #print(sch)    
+    #print(tuple(qs))
+    #for d in days:
+        #sel = (Calendar
+           #.select()
+           #.where(Calendar.day == d)
+           #.order_by(Calendar.timestart))
+        
+        #schd = {}
+        #for item in sel:
+            #evtime = [t for t in timeslist if (t >= item.timestart and t < item.timeend)]
+            #schd[item] = evtime
+        #sch[d] = schd
+    
+    
     #print(sch)
     return sch
+
+def get_endevents(sch):
+    endev = {}
+    for d in sch:
+        for ev in sch[d]:
+            endev[d] = ev['evtime'][len(ev['evtime'])-1]
+            
+    return endev
     
 def start_page():
     prevw = request.args.get('prev')
     nextw = request.args.get('next')
     days = get_week(prevw, nextw)
     sch = get_schedule(prevw, nextw)
-    
-    #-------#
-    timet = datetime(1,1,1,8)
-    print(timet)
-    td = timedelta(minutes=5)
-    times = []
-    while timet <= datetime(1,1,1,16,30):
-        times.append(timet.time())
-        timet = timet+td
-    #print(times)
-    #-------#
-    
+    endev = get_endevents(sch)
+    #times = times()
+    #times = [time(8,0)]
     resp = render_template('calendar.html', title='Расписание конференц-зала', 
-                           days=days, sch=sch, times=times)
+                           days=days, sch=sch, times=times(), endev = endev)
     if request.method == 'POST':
         dictform = dict(request.form)
         if 'changesub' in request.form and 'evid' in request.form:

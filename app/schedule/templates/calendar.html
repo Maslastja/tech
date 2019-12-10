@@ -39,22 +39,81 @@
 										</tr>
 									{% endfor %}
 								</table>#}
-								<table class="tablesch table-scroll">
+								{% set r=[1,2,3] %}								
+								{#<table class="tablesch">
+									{% for i in r %}
+										<tr>
+											{% for j in r %}
+												{% if i == 1 %}
+													<td colspan=2>1</td>
+												{% else %}
+													<td>1</td>
+												{% endif %}	
+												
+											{% endfor %}										
+										</tr>
+									{% endfor %}
+								</table>#}
+								<table class="table table_extra">
+									
 									{% set min = '00' %}
-									<th></th>	
+									<th class="format"></th>	
 									{% for d in sch %}
 										<th class="format">{{ d.strftime("%d.%m.%Y") }}<br>{{ daysname[days.index(d)] }}</th>
 									{% endfor %}
-									{% for t in times %}	
+									
+									{% for t in times %}
 										<tr>											
-											<td>
+											<td class="time">
 											{% if t.strftime("%M") == min %}
 												{{ t.strftime("%H:%M") }}
 											{% endif %}
-											</td>										
-											{% for d in sch %}
-												<td></td>
+											</td>	
+																						
+											{% for d in sch %}								
+												
+												{% if sch[d] != {} %}
+													{% set vars = {'td': False} %}													
+													{% for ev in sch[d] %}
+														
+														{% if t in ev['evtime'] %}
+															{% if vars.update({'td': True}) %}{% endif %}
+															{% if t == ev['evtime'][0] %}
+																<td class="active" rowspan={{ ev['evtime']|count }}>
+																	<label class="form-radio">
+    																	<input type="radio" name="evid" value={{ ev.id }}>
+    																	<i class="form-icon"></i>
+    																	<b>{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</b><br>
+    																	{{ ev.event }}
+  																	</label>
+  																</td>
+															{% endif %}
+														{% elif t < ev['evtime'][0] and not vars.td %}
+															{% if vars.update({'td': True}) %}{% endif %}	
+															{% if t.strftime("%M") == min %}
+																<td class="special"></td>
+															{% else %}												
+																<td class="small"></td>
+															{% endif %}	
+														{% endif %}
+													{% endfor %}
+													{% if t > endev[d] %}
+														{% if t.strftime("%M") == min %}
+															<td class="special"></td>
+														{% else %}												
+															<td class="small"></td>
+														{% endif %}
+													{% endif %}
+												{% else %}
+													{% if t.strftime("%M") == min %}
+														<td class="special"></td>
+													{% else %}												
+														<td class="small"></td>
+													{% endif %}
+												{% endif %}
+												
 											{% endfor %}
+											
 										</tr>
 									{% endfor %}							
 								</table>
