@@ -45,7 +45,8 @@ def times():
     timet = datetime(1,1,1,8)
     td = timedelta(minutes=5)
     times = []
-    while timet <= datetime(1,1,1,16,30):
+    #while timet <= datetime(1,1,1,16,30):
+    while timet <= datetime(1,1,1,16,55):
         times.append(timet.time())
         timet = timet+td
     

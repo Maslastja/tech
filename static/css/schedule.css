@@ -1,11 +1,12 @@
 table_extra {
 	table-layout: fixed;
+
 }
 
 .table_extra td {
   border: .0rem solid;
   border-right: .05rem solid #ccccff;  
-  padding: .1rem .1rem;
+  padding: .1rem .2rem;
  word-wrap: break-word;
 
 }
@@ -37,5 +38,9 @@ table_extra {
 
 .table_extra td.time {
   width: 2%; 
+}
+
+.table_extra td.bot {
+  border-bottom: .05rem solid #ccccff; 
 }
 

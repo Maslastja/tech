@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-exp.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-icons.css') }} type="text/css" >
-<link rel="stylesheet" href={{ url_for('static',filename='css/schedule.css') }} type="text/css" >
+		<link rel="stylesheet" href={{ url_for('static',filename='css/schedule.css') }} type="text/css" >
 		{% if session['user']['isadmin'] %}
 		<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
   		<script>tinymce.init({
@@ -39,10 +39,10 @@
 				{% endif %}
 			</div>#}
 			<div class="columns">
-				<div class="column col-6 col-mx-auto">
-					<div class="column col-8 p-centered">
+				<div class="column col-12 col-mx-auto">
+					{#<div class="column col-8 p-centered">
 						<h1>Техническая страница ИООД</h1> 
-					</div> 
+					</div>#} 
 					<nav class="navbar">
 						<section class="navbar-section">
 							{% if navname == 'navindex' %}
@@ -68,6 +68,9 @@
 								{% endif %}
 							{% endif %}
 						</section>
+						<section class="navbar-center">
+    					<h1>Техническая страница ИООД</h1>
+  						</section>
 						<section class="navbar-section">							
 							{% if session['user'] %}
 								<a name='exit' href={{ url_for('auth.logout') }} class="btn btn-link">{{ session['user']['username'] }} | Выход</a>
