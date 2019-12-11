@@ -5,3 +5,4 @@ __pycache__
 .directory
 img
 files
+db_techpage.sqlite

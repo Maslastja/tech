@@ -29,10 +29,11 @@ table_extra {
 
 .table_extra td.active {
  font-size: 14px;
- border: .05rem solid #ccccff;  
+ border: .05rem solid #ccccff; 
+ vertical-align: top; 
  width: 14%;
- /*background-color: #e6e6ff;
- background-clip: padding-box;*/
+ background-color: #e6e6ff;
+ background-clip: padding-box;
   
 }
 
@@ -44,3 +45,6 @@ table_extra {
   border-bottom: .05rem solid #ccccff; 
 }
 
+.table_extra span.comment {
+  font-size: 12px;
+}

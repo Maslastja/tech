@@ -6,7 +6,7 @@ class Calendar(db.Model):
        timestart = pw.TimeField(null=False)
        timeend = pw.TimeField(null=False)
        event = pw.TextField(300)
-       resp = pw.CharField(100)
+       resp = pw.CharField(100, null=True)
        comment = pw.CharField(null=True)
        
        class Meta:

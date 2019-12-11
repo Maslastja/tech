@@ -24,14 +24,22 @@ def validate_username(form, field):
 def validate_time(form, field):
     #print(field.object_data)  #начальное значениеи поля
     #print(field.data)         #текущее значение поля
+    cur_ev = None
     d = form.day.data.strftime('%Y-%m-%d')
+    if form.timestart.object_data:
+        cur_ev = Calendar.get_or_none(Calendar.day == d, 
+                                      Calendar.timestart == form.timestart.object_data)
     sel = Calendar.select().where(Calendar.day == d)
     for ev in sel:
-        if ((field.name == 'timestart' and field.object_data != field.data and
+        if (((field.name == 'timestart' and field.object_data != field.data and
             field.data >= ev.timestart and field.data < ev.timeend) or
            (field.name == 'timeend' and field.object_data != field.data and 
-            field.data > ev.timestart and field.data <= ev.timeend)):
-            raise ValidationError('Указанное время занято')   
+            field.data > ev.timestart and field.data <= ev.timeend)) or 
+            (cur_ev and cur_ev.id != ev.id and 
+                        ((field.name == 'timestart' and field.data == ev.timestart) or 
+                         (field.name == 'timeend' and field.data == ev.timeend)))):
+            raise ValidationError('Указанное время занято')
+            
     
 UserForm = model_form(User, field_args=
                       {'username': dict(label='логин',

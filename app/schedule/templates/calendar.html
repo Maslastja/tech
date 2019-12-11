@@ -42,7 +42,13 @@
 												<input type="radio" name="evid" value={{ ev.id }}>
 												<i class="form-icon"></i>
 												<b>{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</b><br>
-												<span>{{ ev.event }}</span>
+												<span>{{ ev.event }}</span><br>
+												{% if ev.resp %}
+													<span><b>Отв.</b> {{ ev.resp }}</span>
+												{% endif %}
+												{% if ev.comment %}
+												<br><span class="comment"><i>{{ ev.comment }}</i></span>
+												{% endif %}
 											</label>
 										{% else %}
 											<b>{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</b><br>

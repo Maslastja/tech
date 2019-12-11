@@ -56,7 +56,6 @@ def get_schedule(prevw=None, nextw=None):
     days = get_week(prevw, nextw)
     sch = {}
     timeslist = times()
-        #for t in times:
     qs = (Calendar.select(Calendar.day, pw.fn.collect(Calendar.id,
                                                      Calendar.timestart,
                                                      Calendar.timeend,
@@ -87,23 +86,6 @@ def get_schedule(prevw=None, nextw=None):
         for i in list_keys:
             events.append(dict_for_order[i])
         sch[q['day']]=events
-        #print(events)
-    #print(sch)    
-    #print(tuple(qs))
-    #for d in days:
-        #sel = (Calendar
-           #.select()
-           #.where(Calendar.day == d)
-           #.order_by(Calendar.timestart))
-        
-        #schd = {}
-        #for item in sel:
-            #evtime = [t for t in timeslist if (t >= item.timestart and t < item.timeend)]
-            #schd[item] = evtime
-        #sch[d] = schd
-    
-    
-    #print(sch)
     return sch
 
 def get_endevents(sch):
@@ -120,8 +102,6 @@ def start_page():
     days = get_week(prevw, nextw)
     sch = get_schedule(prevw, nextw)
     endev = get_endevents(sch)
-    #times = times()
-    #times = [time(8,0)]
     resp = render_template('calendar.html', title='Расписание конференц-зала', 
                            days=days, sch=sch, times=times(), endev = endev)
     if request.method == 'POST':

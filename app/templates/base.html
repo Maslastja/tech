@@ -26,29 +26,15 @@
 	<body>
 		{#{{ session['sid'] }}#}
 		<div class="container">
-			{#<div class="columns">
-				{% if session['user'] %}
-					<div class="column col-2 col-ml-auto">
-						<span class="label label-secondary">пользователь: {{ session['user']['username'] }}</span>
-						<a name='exit' href={{ url_for('auth.logout') }} class="btn-link">Выход</a>
-					</div>
-				{% else %}
-					<div class="column col-1 col-ml-auto">
-						<a name='exit' href={{ url_for('auth.login') }} class="btn-link">Вход</a>
-					</div>
-				{% endif %}
-			</div>#}
 			<div class="columns">
 				<div class="column col-12 col-mx-auto">
-					{#<div class="column col-8 p-centered">
-						<h1>Техническая страница ИООД</h1> 
-					</div>#} 
 					<nav class="navbar">
 						<section class="navbar-section">
+							<img src={{ url_for('static',filename='img/med.png') }} alt={{ url_for('static',filename='img/med.png') }} width=10%>
 							{% if navname == 'navindex' %}
-								<a name="navindex" href="/" class="btn active">Главная</a>
+								<a name="navindex" href="/" class="btn active">Техническая страница</a>
 							{% else %}
-								<a name="navindex" href="/" class="btn btn-link">Главная</a>
+								<a name="navindex" href="/" class="btn btn-link">Техническая страница</a>
 							{% endif %}
 							{% if navname == 'navschedule' %}							
 								<a name="navschedule" href={{ url_for('calendar.start_page') }} class="btn active">Расписание конференц-зала</a>
@@ -68,9 +54,6 @@
 								{% endif %}
 							{% endif %}
 						</section>
-						<section class="navbar-center">
-    					<h1>Техническая страница ИООД</h1>
-  						</section>
 						<section class="navbar-section">							
 							{% if session['user'] %}
 								<a name='exit' href={{ url_for('auth.logout') }} class="btn btn-link">{{ session['user']['username'] }} | Выход</a>
