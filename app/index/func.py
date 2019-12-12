@@ -6,15 +6,15 @@ from app.models.news import News
 
 def get_links_for_base():
     ood = list(Link.select().where(Link.typelink.typecode == 1)
-               .join(TypeLinks))
+               .join(TypeLinks).order_by(Link.linkname))
     zdrav = list(Link.select().where(TypeLinks.typecode == 2)
-               .join(TypeLinks))
+               .join(TypeLinks).order_by(Link.linkname))
     dop = list(Link.select().where(TypeLinks.typecode == 3)
-               .join(TypeLinks))
+               .join(TypeLinks).order_by(Link.linkname))
     files = list(Link.select().where(TypeLinks.typecode == 4)
-               .join(TypeLinks))
+               .join(TypeLinks).order_by(Link.linkname))
     video = list(Link.select().where(TypeLinks.typecode == 5)
-               .join(TypeLinks))
+               .join(TypeLinks).order_by(Link.linkname))
     
     linksall = {'ood': ood,
                 'zdrav': zdrav,
