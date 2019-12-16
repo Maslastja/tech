@@ -1,0 +1,46 @@
+{% set navname = 'navphones' %}
+{% extends "base.html" %}
+{% block content %}
+<div class="column col-4">
+	<a href={{ url_for('index.load_phones', type_phone='irk') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Иркутск</a>	   
+	<a href={{ url_for('index.load_phones', type_phone='ang') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Ангарск</a>	   
+	<a href={{ url_for('index.load_phones', type_phone='br') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Братск</a>	   
+</div>
+{{ (phonesotd|count+1)//3+1 }}		
+
+<div class="columns">
+	<div class="column col-4">			
+	   <table class="table">
+		<tr>
+			<th>Абонент</th>	
+			<th>внутренний</th>
+			<th>городской</th>	
+		</tr>		
+		<tr class="parent">
+			<td colspan="5"><a href="#"><b>Важное</b></a></td>
+		</tr>
+		{% for ph in phones %}
+		<tr class="box">
+			<td>{{ ph['name'] }}</td>	
+			<td>{{ ph['tsokr'] }}</td>
+			<td>{{ ph['tgorod'] }}</td>	
+		</tr>				
+		{% endfor %}
+		{% for otd in phonesotd %}
+		
+		<tr class="parent">
+			<td colspan="5"><a href="#"><b>{{ otd.name }}</b></a></td>
+		</tr>
+		{% for ph in otd['tnumb'] %}		
+		<tr class="box">
+		<td>{{ ph['name'] }}</td>	
+		<td>{{ ph['tsokr'] }}</td>
+		<td>{{ ph['tgorod'] }}</td>
+		</tr>		
+		{% endfor %}
+		{% endfor %}
+		</table>
+	</div>		
+				
+</div>
+{% endblock %}

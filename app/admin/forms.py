@@ -10,7 +10,6 @@ from app.models.news import News
 from app.models.instructions import Instruction
 from app.models.calendar import Calendar
 
-
 def validate_username(form, field):
     #print(field.object_data)  #начальное значениеи поля
     #print(field.data)         #текущее значение поля
@@ -105,3 +104,4 @@ CalendarForm = model_form(Calendar,
                        'resp': dict(label='ответственный'),
                        'comment': dict(label='комментарий')
                        })
+

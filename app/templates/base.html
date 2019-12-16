@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-exp.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-icons.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/schedule.css') }} type="text/css" >
+		<link rel="stylesheet" href={{ url_for('static',filename='css/phones.css') }} type="text/css" >
 		{% if session['user']['isadmin'] %}
 		<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
   		<script>tinymce.init({
@@ -21,7 +22,28 @@
   									language: "ru"
 									});
 		</script>
-  		{% endif %}
+   	{% endif %}
+   <script type="text/javascript">
+       window.addEventListener("DOMContentLoaded", function() {
+	            var nodes = document.querySelectorAll(".parent");
+	            var num_scroll;
+	            [].forEach.call(nodes, function(tr) {
+	                var box = [],
+	                    next = tr.nextElementSibling;
+	                while (next && next.classList.contains("box")) {
+	                    box.push(next);
+	                    next = next.nextElementSibling;
+	                }
+	                tr.querySelector("td a").addEventListener("click", function(event) {
+	                 event.preventDefault();
+	                 box.forEach(function(item){
+	                 item.classList.toggle("show");
+	                });
+	                tr.scrollIntoView();
+	                },false)
+	            })
+	        });	    
+</script>
   	</head>
 	<body>
 		{#{{ session['sid'] }}#}
@@ -45,6 +67,11 @@
 								<a name="navfaq" href={{ url_for('instructions.start_page') }} class="btn active">Инструкции</a>
 							{% else %}
 								<a name="navfaq" href={{ url_for('instructions.start_page') }} class="btn btn-link">Инструкции</a>
+							{% endif %}
+							{% if navname == 'navphones' %}							
+								<a name="navphones" href={{ url_for('index.phones') }} class="btn active">Телефонный справочник</a>
+							{% else %}
+								<a name="navphones" href={{ url_for('index.phones') }} class="btn btn-link">Телефонный справочник</a>
 							{% endif %}
 							{% if session['user']['isadmin'] %}
 								{% if navname == 'navadm' %}

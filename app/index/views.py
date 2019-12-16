@@ -1,8 +1,15 @@
-from flask import render_template, redirect, url_for, request, session
+from os import getenv
+from flask import render_template, redirect, url_for, request, session, Response
 from datetime import datetime
+
+import urllib.request
+from smb.SMBHandler import SMBHandler
+from app.utils import pars_phone
+
 from app.index.func import get_links_for_base, get_types_news, get_news
 from app.admin.forms import NewsForm
 from app.models.news import News
+
 
 def start_page():
     linksall = get_links_for_base()
@@ -74,3 +81,31 @@ def open_news():
     
     return render_template('newsform.html', title=titleform, 
                            form=form, text=text)
+
+def phones():
+    phones = pars_phone()
+    return render_template('phones.html', phones = phones[0],
+                           phonesotd = phones[1])
+
+def load_phones():
+    type_ph = request.args.get('type_phone')
+    
+    director = urllib.request.build_opener(SMBHandler)
+    if type_ph == 'irk':
+        doc = director.open(getenv('PHONE_IRK'))
+        return Response(
+            doc,
+            mimetype="spreadsheet/ods",
+            headers={"Content-disposition":
+                     "attachment; filename=phones.ods"})    
+    
+    if type_ph == 'ang':
+        doc = director.open(getenv('PHONE_ANG'))
+    else:
+        doc = director.open(getenv('PHONE_BR'))
+        
+    return Response(
+        doc,
+        mimetype="application/vnd.ms-excel",
+        headers={"Content-disposition":
+                 "attachment; filename=phones.xls"})    
