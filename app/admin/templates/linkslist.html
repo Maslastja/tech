@@ -11,10 +11,11 @@
 			   {% endif %}
 			{% endwith %}
 			<table class="table table-striped table-hover">
-				<tr>
+				<tr class="text-center">
 					<th>наименование</th>
 					<th>полный адрес</th>
 					<th>тип</th>
+					<th>активная</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -23,12 +24,17 @@
 						<td>{{ l.linkname }}</td>
 						<td>{{ l.fullname }}</td>
 						<td>{{ l.typelink }}</td>
-						<td>
+						{% if l.isactive == True %}						
+							<td class="text-center">Да</td>
+						{% else %}
+							<td class="text-center">Нет</td>
+						{% endif %}
+						<td class="text-center">
 							<button type="submit" class="btn btn-link" name="changesub" value={{ l.id }}>
 								<i class="icon icon-edit"></i>
 							</button>					
 						</td>						
-						<td>
+						<td class="text-center">
 							<button type="submit" class="btn btn-link" name= "delsub" value = {{ l.id }}>
 								<i class="icon icon-delete"></i>
 							</button>					

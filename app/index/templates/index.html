@@ -61,7 +61,7 @@
 				{% endfor %}
 			</section>
 		</nav>
-		{% if session['user']['isadmin'] %}
+		{% if session.user and 'SYS' in session.user.roles %}
 		<div class="panel-header">
 			<button type="submit" class="btn btn-link" name="addnews">
 				<i class="icon icon-plus"></i> Добавить запись
@@ -70,7 +70,11 @@
 		{% endif %}
 		{% for n in newsall %}
 			<ul class="menu">
+				{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}	
+				<div class="title bg-error">	
+				{% else %}		
 				<div class="title bg-secondary">
+				{% endif %}
 					{#<div class="column col-ml-auto"><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>#}
 					<div class="column col-ml-auto"><b>{{ n.createdate.strftime("%d.%m.%Y %H:%M") }} {{ n.name }}</b></div>
 				</div>
@@ -78,7 +82,7 @@
 				<div class="column">
 				{{ n.text|safe }}
 				</div>
-				{% if session['user']['isadmin'] %}
+				{% if session.user and 'SYS' in session.user.roles %}
 					<div class="column  col-1">
 						<button type="submit" class="btn btn-link" name="changenews" value={{ n.id }}>
 							<i class="icon icon-edit"></i>

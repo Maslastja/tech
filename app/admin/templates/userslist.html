@@ -10,15 +10,23 @@
 		   {% endif %}
 		{% endwith %}
 		<button type="submit" class="btn btn-link" name="adduser"><i class="icon icon-plus"></i> Добавить</button>
-		<table class="table-sm table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>№</th>
 				<th>логин</th>
+				<th>активный</th>
+				<th></th>
+				<th></th>
 			</tr>
 			{% for u in users %}
 				<tr>
 					<td>{{ u.ind }}</td>
 					<td>{{ u.username }}</td>
+					{% if u.isactive == True %}						
+						<td>Да</td>
+					{% else %}
+						<td>Нет</td>
+					{% endif %}
 					<td>
 						<button type="submit" class="btn btn-link" name="changesub" value={{ u.id }}>
 							<i class="icon icon-edit"></i>

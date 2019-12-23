@@ -7,9 +7,11 @@
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-exp.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-icons.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/schedule.css') }} type="text/css" >
-		{% if session['user']['isadmin'] %}
+		<link rel="stylesheet" href={{ url_for('static',filename='css/phones.css') }} type="text/css" >
+ 		<script src='//static.iood.ru/jquery/3.4.1/jquery.min.js'></script>
+		{% if session.user and 'SYS' in session.user.roles %}
 		<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
-  		<script>tinymce.init({
+ 		<script>tinymce.init({
   									selector:'textarea#redactor', 
    								plugins: ["advlist autolink lists link image charmap print preview anchor", 
   												"link searchreplace visualblocks code fullscreen insertdatetime",
@@ -21,16 +23,53 @@
   									language: "ru"
 									});
 		</script>
-  		{% endif %}
-  	</head>
+   	{% endif %}
+		<script type="text/javascript">
+			function logout() {
+					     $.ajax({
+				        type: 'post',
+				        url: '//auth.iood.ru/user/logout',
+				        headers: {'X-Requested-With': 'XMLHttpRequest'},
+				        xhrFields: {withCredentials: true},
+				        crossDomain: true
+				      }).done(function(resp) {
+		 					$('#logout').attr('href', '/login').text('Вход');
+							location.reload();										
+				      });	
+			 }
+		</script>  	
+	   <script type="text/javascript">
+	       window.addEventListener("DOMContentLoaded", function() {
+		            var nodes = document.querySelectorAll(".parent");
+		            var num_scroll;
+		            [].forEach.call(nodes, function(tr) {
+		                var box = [],
+		                    next = tr.nextElementSibling;
+		                while (next && next.classList.contains("box")) {
+		                    box.push(next);
+		                    next = next.nextElementSibling;
+		                }
+		                tr.querySelector("td a").addEventListener("click", function(event) {
+		                 event.preventDefault();
+		                 box.forEach(function(item){
+		                 item.classList.toggle("show");
+		                });
+		                tr.scrollIntoView();
+		                },false)
+		            })
+		        });	    
+		</script>
+	</head>
 	<body>
 		{#{{ session['sid'] }}#}
 		<div class="container">
 			<div class="columns">
-				<div class="column col-12 col-mx-auto">
+				<div class="column col-1 col-mr-auto">
+					<a name="navindex" href="/" ><img src={{ url_for('static',filename='img/med.png') }} alt={{ url_for('static',filename='img/med.png') }} width=70%></a>
+				</div>
+				<div class="column col-11 col-mr-auto">
 					<nav class="navbar">
 						<section class="navbar-section">
-							<img src={{ url_for('static',filename='img/med.png') }} alt={{ url_for('static',filename='img/med.png') }} width=10%>
 							{% if navname == 'navindex' %}
 								<a name="navindex" href="/" class="btn active">Техническая страница</a>
 							{% else %}
@@ -46,7 +85,12 @@
 							{% else %}
 								<a name="navfaq" href={{ url_for('instructions.start_page') }} class="btn btn-link">Инструкции</a>
 							{% endif %}
-							{% if session['user']['isadmin'] %}
+							{% if navname == 'navphones' %}							
+								<a name="navphones" href={{ url_for('phonebook.phones') }} class="btn active">Телефонный справочник</a>
+							{% else %}
+								<a name="navphones" href={{ url_for('phonebook.phones') }} class="btn btn-link">Телефонный справочник</a>
+							{% endif %}
+							{% if session.user and 'SYS' in session.user.roles %}
 								{% if navname == 'navadm' %}
 									<a name="navadm" href={{ url_for('admin.start_page') }} class="btn active">Администрирование</a>
 								{% else %}
@@ -56,9 +100,9 @@
 						</section>
 						<section class="navbar-section">							
 							{% if session['user'] %}
-								<a name='exit' href={{ url_for('auth.logout') }} class="btn btn-link">{{ session['user']['username'] }} | Выход</a>
+								<button id='logout' class='btn btn-link' onclick='logout()'>{{ session['user']['sign'] }} | Выход</button>
 							{% else %}
-								<a name='exit' href={{ url_for('auth.login') }} class="btn btn-link">Вход</a>
+								<a id='logout' href={{ url_for('auth.login') }} class='btn btn-link'>Вход</a>
 							{% endif %}
 
 						</section>
