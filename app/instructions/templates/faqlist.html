@@ -3,7 +3,7 @@
 {% extends "base.html" %}
 {% block content %}
 <form action="" method="post" novalidate>
-	{% if session['user']['isadmin'] %}
+	{% if session.user and 'SYS' in session.user.roles %}
 	<div class="panel-header">
 		<button type="submit" class="btn btn-link" name="addins">
 			<i class="icon icon-plus"></i> Добавить запись
@@ -13,16 +13,18 @@
 	<table>	
 	{% for ins in insall %}
 		<tr>
-			<td><a href={{ url_for('instructions.read_instr', id=ins.id) }} class="btn btn-link"><i class="icon icon-arrow-right"></i><b>{{ ins.name }}</b></a></td>		
-			{% if session['user']['isadmin'] %}
-			
+			{% if session.user and 'SYS' in session.user.roles and ins.isactive == False %}
+			<td><a href={{ url_for('instructions.read_instr', id=ins.id) }} class="btn btn-link text-error"><i class="icon icon-arrow-right"></i><b>{{ ins.name }}</b></a></td>	
+			{% else %}	
+			<td><a href={{ url_for('instructions.read_instr', id=ins.id) }} class="btn btn-link"><i class="icon icon-arrow-right"></i><b>{{ ins.name }}</b></a></td>
+			{% endif %}		
+			{% if session.user and 'SYS' in session.user.roles %}
 			<td><button type="submit" class="btn btn-link" name="changeins" value={{ ins.id }}>
 				<i class="icon icon-edit"></i>
 			</button></td>					
 			<td><button type="submit" class="btn btn-link" name= "delins" value = {{ ins.id }}>
 				<i class="icon icon-delete"></i>
 			</button></td>
-							
 			{% endif %}
 		</tr>
 	{% endfor %}

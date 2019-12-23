@@ -1,0 +1,57 @@
+{% set navname = 'navphones' %}
+{% extends "base.html" %}
+{% block content %}
+<div class="column col-4">
+	<a href={{ url_for('phonebook.load_phones', type_phone='irk') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Иркутск</a>	   
+	<a href={{ url_for('phonebook.load_phones', type_phone='ang') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Ангарск</a>	   
+	<a href={{ url_for('phonebook.load_phones', type_phone='br') }} class="btn btn-link"><i class="icon icon-download"></i> справочник Братск</a>	   
+</div>
+{% set rows = (phonesotd|count+1)//3+1 %}	
+{#{{ phonesotd|count }}#}
+{#{{ phonesotd }}#}
+<div class="columns">
+	{% for i in range(1,4) %}
+	<div class="column col-4">			
+	   <table class="table">
+		<thead>		
+		<tr>
+			<th class="xl">Абонент</th>	
+			<th class="sm">внутренний</th>
+			<th class="sm">городской</th>	
+		</tr>	
+		</thead>	
+		<tbody>
+		{% for id in range(i*rows-rows+1, i*rows+1) %}		
+			{% if id < phonesotd|count+2 %}			
+			{% if i == 1 and id == 1 %}		
+				<tr class="parent">
+					<th class="special" colspan="3" onclick="if ($('.o{{ id }}').css('display') == 'none') $('.o{{ id }}').show(); else $('.o{{ id }}').hide();">Приемная глав.врача</th>
+				</tr>
+				{% for ph in phones %}
+				<tr class="o{{ id }} box">
+					<td class="special xl">{{ ph['name'] }}</td>	
+					<td class="special sm">{{ ph['tsokr'] }}</td>
+					<td class="special sm">{{ ph['tgorod'] }}</td>	
+				</tr>				
+				{% endfor %}
+			{% else %}
+				<tr class="parent">
+					<th class="special" colspan="3" onclick="if ($('.o{{ id }}').css('display') == 'none') $('.o{{ id }}').show(); else $('.o{{ id }}').hide();">{{ phonesotd[id-2].name }}</th>
+				</tr>
+				{% for ph in phonesotd[id-2]['tnumb'] %}		
+					<tr class="o{{ id }} box">
+					<td class="special xl">{{ ph['name'] }}</td>	
+					<td class="special sm">{{ ph['tsokr'] }}</td>
+					<td class="special sm">{{ ph['tgorod'] }}</td>
+					</tr>	
+				{% endfor %}
+			{% endif %}
+			{% endif %}
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>		
+	{% endfor %}			
+</div>
+
+{% endblock %}

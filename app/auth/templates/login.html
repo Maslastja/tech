@@ -6,33 +6,71 @@
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-exp.css') }} type="text/css" >
 		<link rel="stylesheet" href={{ url_for('static',filename='css/spectre-icons.css') }} type="text/css" >
+		<script type="text/javascript" src='//static.iood.ru/jquery/3.4.1/jquery.min.js'></script>
 	</head>
 	<body>
 		<div class="column col-8 col-mx-auto">
 			<div class="column col-5 col-mx-auto">
-				<h1>Введите логин и пароль</h1>
-				<form action="" method="post" novalidate>
+				<h1 class="text-center">Введите логин и пароль</h1>
+				<form id="login-form" method="POST" action="" class="form">
 					<div class="form-group">		               
 						<div class="column col-8 col-mx-auto">
-							{{ form.username.label(class_="form-label") }}
-							{{ form.username(class_="form-input") }}
-							{% for error in form.username.errors %}
-								<span class="form-input-hint">{{ error }}</span>
-							{% endfor %}
+							{{ form.login.label(class_="form-label") }}
+							{{ form.login(class_="form-input") }}
 						</div>
 						<div class="column col-8 col-mx-auto">
 							{{ form.password.label(class_="form-label") }}
 							{{ form.password(class_="form-input") }}
-							{% for error in form.password.errors %}
-								<span class="form-input-hint">{{ error }}</span>
-							{% endfor %}
 						</div>
 					</div>
 					<div class="column col-8 col-mx-auto">
-						<button type="submit" class="btn" name="enter">Войти</button>
-						<button type="submit" class="btn" name="back">Отмена</button>
+						<button type="submit" class="btn" name="cmd_login">Войти</button>
+						<a href="/" class="btn">Отмена</a>						
+						{#<button type="submit" class="btn" name="back">Отмена</button>#}
 					</div>
 				</form>
+				<script type="text/javascript">
+					function login() {
+						$("input[name=login]").focus();
+						$('#login-form').submit(function(e) {
+							e.preventDefault();
+							$.ajax({
+								type: 'post',
+								url: '//auth.iood.ru/user/login',
+								data: $(this).serializeArray(),
+								context: this,
+								headers: {'X-Requested-With': 'XMLHttpRequest'},
+								xhrFields: {withCredentials: true},
+								crossDomain: true
+							}).done(function(resp) {
+								$('div.alert').remove();
+								if (resp.err) {
+									$('<div />')
+										//.width('50%')
+										.addClass('text-error text-center')
+										.text(resp.msg)
+										.insertAfter($(this))
+								} else {
+									$(this).off('submit').submit()
+									var url = document.referrer;
+									$(location).attr('href',url);				
+								}
+							})
+						})
+					}
+					$(document).ready(function() {
+						$('button[name=cmd_login]').prop('disabled', true);
+						$.getJSON('//struc.iood.ru/api/branch/guess').done(function(resp) {
+							if (resp) {
+								$('input[name=branch]').val(resp.id)
+							}
+							login()
+						}).always(function() {
+							$('button[name=cmd_login]').prop('disabled', false)
+						})
+						;
+					} )
+				</script>
 			</div>
 		</div> 
 	</body>

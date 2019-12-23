@@ -5,7 +5,44 @@
 .box.show {
 	display: table-row;
 }
-	 
-.parent {
-/*background-color: yellow;*/
+
+ td.special {
+	padding: .1rem .1rem;
 }
+
+ th.special {
+ 	cursor: pointer;
+	padding: .1rem .1rem;
+}
+
+th.xl,
+td.xl {
+  width: 50vw;
+}
+
+th.sm,
+td.sm {
+	text-align: center;
+  	width: 25vw;
+}
+
+/*
+.table-fixed-head {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table-fixed-head thead tr {
+  display: block;
+  position: relative;
+}
+
+
+.table-fixed-head tbody {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: calc(100vh - 30px);
+}
+*/

@@ -20,11 +20,6 @@
 				{% else %}
 					<li class="tab-item"><a class="btn btn-link" name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
 				{% endif %}
-				{% if subname =='users' %}
-					<li class="tab-item"><a class="btn btn-primary" name='users' href={{ url_for('admin.get_users') }}>Пользователи</a></li>
-				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='users' href={{ url_for('admin.get_users') }}>Пользователи</a></li>
-				{% endif %}
 			</ul>
 		</div>
 		<div class="column col-ml-auto">				
