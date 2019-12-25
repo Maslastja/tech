@@ -1,28 +1,28 @@
 {% set navname = 'navadm' %}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<form action="" method="post" novalidate>
-	<div class="columns">
-		<div class="column col-2 col-mr-auto">
-			<ul class="menu">
+<form action='' method='post' novalidate>
+	<div class='columns'>
+		<div class='column col-2 col-mr-auto'>
+			<ul class='menu'>
 				{% if subname =='typenews' %}
-					<li class="tab-item"><a class="btn btn-primary" name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
+					<li class='tab-item'><a class='btn btn-primary' name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
+					<li class='tab-item'><a class='btn btn-link' name='typenews' href={{ url_for('admin.get_types_news') }}>Тип новостей</a></li>
 				{% endif %}
 				{% if subname =='links' %}
-					<li class="tab-item"><a class="btn btn-primary" name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
+					<li class='tab-item'><a class='btn btn-primary' name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
+					<li class='tab-item'><a class='btn btn-link' name='links' href={{ url_for('admin.get_links') }}>Ссылки</a></li>
 				{% endif %}
 				{% if subname =='typelinks' %}
-					<li class="tab-item"><a class="btn btn-primary" name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
+					<li class='tab-item'><a class='btn btn-primary' name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
 				{% else %}
-					<li class="tab-item"><a class="btn btn-link" name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
+					<li class='tab-item'><a class='btn btn-link' name='typelinks' href={{ url_for('admin.get_types_links') }}>Тип ссылок</a></li>
 				{% endif %}
 			</ul>
 		</div>
-		<div class="column col-ml-auto">				
+		<div class='column col-ml-auto'>				
 			{% block body %}{% endblock %}
 		</div>	
 	</div>

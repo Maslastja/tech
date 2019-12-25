@@ -57,7 +57,7 @@ def login_required(f):
     return decorated_function
 
 # # формат времени для шаблонов jinja2
-# def format_datetime(value, format="%d.%m.%Y %H:%M"):
+# def format_datetime(value, format='%d.%m.%Y %H:%M'):
     # if value is None:
-    # return ""
+    # return ''
     # return value.strftime(format)

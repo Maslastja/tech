@@ -1,32 +1,32 @@
 {% set navname = 'navschedule' %}
 {% set daysname = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'] %}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<form action="" method="post" novalidate>
-	<nav class="navbar">
-		<section class="navbar-section">
+<form action='' method='post' novalidate>
+	<nav class='navbar'>
+		<section class='navbar-section'>
 			{% if session.user and 'SYS' in session.user.roles %}
-				<button class="btn btn-primary" name="addevent"><i class="icon icon-plus"></i></button>
-				<button class="btn btn-link btn-action" name="changesub"><i class="icon icon-edit"></i></button>	
-				<button class="btn btn-link btn-action" name="delsub"><i class="icon icon-delete"></i></button>
-				<button class="btn btn-link btn-action" type="reset"><i class="icon icon-cross"></i></button>
+				<button class='btn btn-primary' name='addevent'><i class='icon icon-plus'></i></button>
+				<button class='btn btn-link btn-action' name='changesub'><i class='icon icon-edit'></i></button>	
+				<button class='btn btn-link btn-action' name='delsub'><i class='icon icon-delete'></i></button>
+				<button class='btn btn-link btn-action' type='reset'><i class='icon icon-cross'></i></button>
 			{% endif %}
-			<a class="btn btn-link" name="prev" href={{ url_for('calendar.start_page', prev=days[0]) }}><i class="icon icon-back"></i> Пред. неделя</a>	
-			<a class="btn btn-link" name="next" href={{ url_for('calendar.start_page', next=days[6]) }}>След. неделя <i class="icon icon-forward"></i></a>
+			<a class='btn btn-link' name='prev' href={{ url_for('calendar.start_page', prev=days[0]) }}><i class='icon icon-back'></i> Пред. неделя</a>	
+			<a class='btn btn-link' name='next' href={{ url_for('calendar.start_page', next=days[6]) }}>След. неделя <i class='icon icon-forward'></i></a>
 		</section>
 	</nav>
 	
-	<table class="table table_extra">
-		<th class="format"></th>	
+	<table class='table table_extra'>
+		<th class='format'></th>	
 		{% for d in sch %}
-			<th class="format">{{ d.strftime("%d.%m.%Y") }}<br>{{ daysname[days.index(d)] }}</th>
+			<th class='format'>{{ d.strftime('%d.%m.%Y') }}<br>{{ daysname[days.index(d)] }}</th>
 		{% endfor %}
 		
 		{% for t in times %}
 			<tr>											
-				<td class="time">
-				{% if t.strftime("%M") == '00' %}
-					{{ t.strftime("%H:%M") }}
+				<td class='time'>
+				{% if t.strftime('%M') == '00' %}
+					{{ t.strftime('%H:%M') }}
 				{% endif %}
 				</td>	
 				{% for d in sch %}								
@@ -36,53 +36,53 @@
 							{% if t in ev['evtime'] %}
 								{% if vars.update({'td': True}) %}{% endif %}
 								{% if t == ev['evtime'][0] %}
-									<td class="active" rowspan={{ ev['evtime']|count }}>
+									<td class='active' rowspan={{ ev['evtime']|count }}>
 										{% if session.user and 'SYS' in session.user.roles %}										
-											<label class="form-radio">
-												<input type="radio" name="evid" value={{ ev.id }}>
-												<i class="form-icon"></i>
-												<b>{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</b><br>
+											<label class='form-radio'>
+												<input type='radio' name='evid' value={{ ev.id }}>
+												<i class='form-icon'></i>
+												<b>{{ ev.timestart.strftime('%H:%M') }} - {{ ev.timeend.strftime('%H:%M') }}</b><br>
 												<span>{{ ev.event }}</span><br>
 												{% if ev.resp %}
 													<span><b>Отв.</b> {{ ev.resp }}</span>
 												{% endif %}
 												{% if ev.comment %}
-												<br><span class="comment"><i>{{ ev.comment }}</i></span>
+												<br><span class='comment'><i>{{ ev.comment }}</i></span>
 												{% endif %}
 											</label>
 										{% else %}
-											<b>{{ ev.timestart.strftime("%H:%M") }} - {{ ev.timeend.strftime("%H:%M") }}</b><br>
+											<b>{{ ev.timestart.strftime('%H:%M') }} - {{ ev.timeend.strftime('%H:%M') }}</b><br>
 											<span>{{ ev.event }}</span>
 										{% endif %}
 									</td>
 								{% endif %}
 							{% elif t < ev['evtime'][0] and not vars.td %}
 								{% if vars.update({'td': True}) %}{% endif %}	
-								{% if t.strftime("%H:%M") == '16:55' %}
-									<td class="small bot"></td>									
-								{% elif t.strftime("%M") == '00' %}
-									<td class="special"></td>
+								{% if t.strftime('%H:%M') == '16:55' %}
+									<td class='small bot'></td>									
+								{% elif t.strftime('%M') == '00' %}
+									<td class='special'></td>
 								{% else %}												
-									<td class="small"></td>
+									<td class='small'></td>
 								{% endif %}	
 							{% endif %}
 						{% endfor %}
 						{% if t > endev[d] %}
-							{% if t.strftime("%H:%M") == '16:55' %}
-								<td class="small bot"></td>									
-							{% elif t.strftime("%M") == '00' %}
-								<td class="special"></td>
+							{% if t.strftime('%H:%M') == '16:55' %}
+								<td class='small bot'></td>									
+							{% elif t.strftime('%M') == '00' %}
+								<td class='special'></td>
 							{% else %}												
-								<td class="small"></td>
+								<td class='small'></td>
 							{% endif %}
 						{% endif %}
 					{% else %}
-						{% if t.strftime("%H:%M") == '16:55' %}
-							<td class="small bot"></td>									
-						{% elif t.strftime("%M") == '00' %}
-							<td class="special"></td>
+						{% if t.strftime('%H:%M') == '16:55' %}
+							<td class='small bot'></td>									
+						{% elif t.strftime('%M') == '00' %}
+							<td class='special'></td>
 						{% else %}												
-							<td class="small"></td>
+							<td class='small'></td>
 						{% endif %}
 					{% endif %}
 				{% endfor %}

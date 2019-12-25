@@ -16,7 +16,8 @@ def make_resp(app, sid, method, url, **kwargs):
 
     try:
         r = requests.request(method, url, **kwargs)
-    except:
+    # except: # замена неявного исключения
+    except requests.RequestException:
         app.logger.error('Failed to connect to session store')
     else:
         try:

@@ -25,24 +25,3 @@ td.sm {
 	text-align: center;
   	width: 25vw;
 }
-
-/*
-.table-fixed-head {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-
-.table-fixed-head thead tr {
-  display: block;
-  position: relative;
-}
-
-
-.table-fixed-head tbody {
-  display: block;
-  overflow: auto;
-  width: 100%;
-  height: calc(100vh - 30px);
-}
-*/

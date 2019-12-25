@@ -8,19 +8,24 @@ from app.models.news import News
 
 def get_links_for_base():
     ood = list(Link.select().where((Link.typelink.typecode == 1) &
-                                   (Link.isactive == 1))
+                                   (Link.isactive == 1) &
+                                   (TypeLinks.isactive == 1))
                .join(TypeLinks).order_by(Link.linkname))
     zdrav = list(Link.select().where((TypeLinks.typecode == 2) &
-                                     (Link.isactive == 1))
+                                     (Link.isactive == 1) &
+                                     (TypeLinks.isactive == 1))
                  .join(TypeLinks).order_by(Link.linkname))
     dop = list(Link.select().where((TypeLinks.typecode == 3) &
-                                   (Link.isactive == 1))
+                                   (Link.isactive == 1) &
+                                   (TypeLinks.isactive == 1))
                .join(TypeLinks).order_by(Link.linkname))
     files = list(Link.select().where((TypeLinks.typecode == 4) &
-                                     (Link.isactive == 1))
+                                     (Link.isactive == 1) &
+                                     (TypeLinks.isactive == 1))
                  .join(TypeLinks).order_by(Link.linkname))
     video = list(Link.select().where((TypeLinks.typecode == 5) &
-                                     (Link.isactive == 1))
+                                     (Link.isactive == 1) &
+                                     (TypeLinks.isactive == 1))
                  .join(TypeLinks).order_by(Link.linkname))
 
     linksall = {'ood': ood,
@@ -44,8 +49,7 @@ def get_news(typenews=None):
         if session.user and 'SYS' in session.user.roles:
             sel = (News
                    .select()
-                   .where((News.isactive == 1) &
-                          (TypeNews.isactive == 1) &
+                   .where((TypeNews.isactive == 1) &
                           (TypeNews.id == typenews))
                    .join(TypeNews, JOIN.LEFT_OUTER,
                          on=(News.typenews_id == TypeNews.id))
@@ -53,7 +57,8 @@ def get_news(typenews=None):
         else:
             sel = (News
                    .select()
-                   .where((TypeNews.isactive == 1) &
+                   .where((News.isactive == 1) &
+                          (TypeNews.isactive == 1) &
                           (TypeNews.id == typenews))
                    .join(TypeNews, JOIN.LEFT_OUTER,
                          on=(News.typenews_id == TypeNews.id))

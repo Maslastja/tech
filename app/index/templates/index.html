@@ -1,124 +1,128 @@
 {% set navname = 'navindex' %}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<div class="columns">			
-	<div class="column col-2">
-		<div class="accordion">
-			<input id="accordion-1" type="checkbox" name="accordion-checkbox" checked="" hidden="">
-			<label class="accordion-header c-hand bg-secondary" for="accordion-1"><b>Ссылки ИООД</b></label>
-			<div class="accordion-body">
-				<ul class="menu menu-nav">
+<div class='columns'>			
+	<div class='column col-2'>
+		<div class='accordion'>
+			<input id='accordion-1' type='checkbox' name='accordion-checkbox' checked='' hidden=''>
+			<label class='accordion-header c-hand bg-secondary' for='accordion-1'><b>Ссылки ИООД</b></label>
+			<div class='accordion-body'>
+				<ul class='menu menu-nav'>
 					{% for l in linksall['ood'] %}					   
-					<li class="menu-item">
-					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					<li class='menu-item'>
+					<a href={{ l.fullname }} target='blank'>{{ l.linkname }}</a>
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
-		<div class="accordion">
-			<input id="accordion-2" type="checkbox" name="accordion-checkbox" checked="" hidden="">
-			<label class="accordion-header c-hand bg-secondary" for="accordion-2"><b>Видеонаблюдение</b></label>
-			<div class="accordion-body">
-				<ul class="menu menu-nav">
+		<div class='accordion'>
+			<input id='accordion-2' type='checkbox' name='accordion-checkbox' checked='' hidden=''>
+			<label class='accordion-header c-hand bg-secondary' for='accordion-2'><b>Видеонаблюдение</b></label>
+			<div class='accordion-body'>
+				<ul class='menu menu-nav'>
 					{% for l in linksall['video'] %}					   
-					<li class="menu-item">
-					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					<li class='menu-item'>
+					<a href={{ l.fullname }} target='blank'>{{ l.linkname }}</a>
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
-		<div class="accordion">
-			<input id="accordion-3" type="checkbox" name="accordion-checkbox" checked="" hidden="">
-			<label class="accordion-header c-hand bg-secondary" for="accordion-3"><b>Файлы</b></label>
-			<div class="accordion-body">
-				<ul class="menu menu-nav">
+		<div class='accordion'>
+			<input id='accordion-3' type='checkbox' name='accordion-checkbox' checked='' hidden=''>
+			<label class='accordion-header c-hand bg-secondary' for='accordion-3'><b>Файлы</b></label>
+			<div class='accordion-body'>
+				<ul class='menu menu-nav'>
 					{% for l in linksall['files'] %}					   
-					<li class="menu-item">
-					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					<li class='menu-item'>
+					<a href={{ l.fullname }} target='blank'>{{ l.linkname }}</a>
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
 	</div>
-	<div class="column col-8">
-		<form action="" method="post" novalidate>
-		<nav class="navbar">
-			<section class="navbar-section">
+	<div class='column col-8'>
+		<form action='' method='post' novalidate>
+		<div id='topline'>		
+		<nav class='navbar'>
+			<section class='navbar-section'>
 				{% if type_id == 0 %}
-					<span class="chip"><a href="/" class="btn btn-link active">#все</a></span>
+					<span class='chip'><a href='/' class='btn btn-link active'>#все</a></span>
 				{% else %}					
-					<a href="/" class="btn btn-link">#все</a>
+					<a href='/' class='btn btn-link'>#все</a>
 				{% endif %}				
 				{% for t in typesall %}
 					{% if type_id == t.id %}
-						<span class="chip"><a href={{ url_for('index.start_page', type_id = t.id) }} class="btn btn-link active">{{ "#"+t.typename }}</a></span>
+						<span class='chip'><a href={{ url_for('index.start_page', type_id = t.id) }} class='btn btn-link active'>{{ '#'+t.typename }}</a></span>
 					{% else %}
-						<a href={{ url_for('index.start_page', type_id = t.id) }} class="btn btn-link">{{ "#"+t.typename }}</a>
+						<a href={{ url_for('index.start_page', type_id = t.id) }} class='btn btn-link'>{{ '#'+t.typename }}</a>
 					{% endif %}
 				{% endfor %}
 			</section>
 		</nav>
 		{% if session.user and 'SYS' in session.user.roles %}
-		<div class="panel-header">
-			<button type="submit" class="btn btn-link" name="addnews">
-				<i class="icon icon-plus"></i> Добавить запись
+		<div class='panel-header'>
+			<button type='submit' class='btn btn-link' name='addnews'>
+				<i class='icon icon-plus'></i> Добавить запись
 			</button>
 		</div>
 		{% endif %}
+		</div>
+		<div id='news'>		
 		{% for n in newsall %}
-			<ul class="menu">
+			<ul class='menu'>
 				{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}	
-				<div class="title bg-error">	
+				<div class='title bg-error'>	
 				{% else %}		
-				<div class="title bg-secondary">
+				<div class='title bg-secondary'>
 				{% endif %}
-					{#<div class="column col-ml-auto"><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>#}
-					<div class="column col-ml-auto"><b>{{ n.createdate.strftime("%d.%m.%Y %H:%M") }} {{ n.name }}</b></div>
+					{#<div class='column col-ml-auto'><b>{{ n.createdate|formatdatetime }} {{ n.name }}</b></div>#}
+					<div class='column col-ml-auto'><b>{{ n.createdate.strftime('%d.%m.%Y %H:%M') }} {{ n.name }}</b></div>
 				</div>
-				<div class="columns">
-				<div class="column">
+				<div class='columns'>
+				<div class='column'>
 				{{ n.text|safe }}
 				</div>
 				{% if session.user and 'SYS' in session.user.roles %}
-					<div class="column  col-1">
-						<button type="submit" class="btn btn-link" name="changenews" value={{ n.id }}>
-							<i class="icon icon-edit"></i>
+					<div class='column  col-1'>
+						<button type='submit' class='btn btn-link' name='changenews' value={{ n.id }}>
+							<i class='icon icon-edit'></i>
 						</button>					
-						<button type="submit" class="btn btn-link" name= "delnews" value = {{ n.id }}>
-							<i class="icon icon-delete"></i>
+						<button type='submit' class='btn btn-link' name= 'delnews' value = {{ n.id }}>
+							<i class='icon icon-delete'></i>
 						</button>
 					</div>					
 				{% endif %}
 				</div>
 			</ul>	
 		{% endfor %}
+		</div>
 		</form>
 	</div>
-	<div class="column col-2">
-		<div class="accordion">
-			<input id="accordion-4" type="checkbox" name="accordion-checkbox" checked="" hidden="">
-			<label class="accordion-header c-hand bg-secondary" for="accordion-4"><b>Ссылки Здравоохранение</b></label>
-			<div class="accordion-body">
-				<ul class="menu menu-nav">
+	<div class='column col-2'>
+		<div class='accordion'>
+			<input id='accordion-4' type='checkbox' name='accordion-checkbox' checked='' hidden=''>
+			<label class='accordion-header c-hand bg-secondary' for='accordion-4'><b>Ссылки Здравоохранение</b></label>
+			<div class='accordion-body'>
+				<ul class='menu menu-nav'>
 					{% for l in linksall['zdrav'] %}					   
-					<li class="menu-item">
-					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					<li class='menu-item'>
+					<a href={{ l.fullname }} target='blank'>{{ l.linkname }}</a>
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
-		<div class="accordion">
-			<input id="accordion-5" type="checkbox" name="accordion-checkbox" checked="" hidden="">
-			<label class="accordion-header c-hand bg-secondary" for="accordion-5"><b>Дополнительные ссылки</b></label>
-			<div class="accordion-body">
-				<ul class="menu menu-nav">
+		<div class='accordion'>
+			<input id='accordion-5' type='checkbox' name='accordion-checkbox' checked='' hidden=''>
+			<label class='accordion-header c-hand bg-secondary' for='accordion-5'><b>Дополнительные ссылки</b></label>
+			<div class='accordion-body'>
+				<ul class='menu menu-nav'>
 					{% for l in linksall['dop'] %}					   
-					<li class="menu-item">
-					<a href={{ l.fullname }} target="blank">{{ l.linkname }}</a>
+					<li class='menu-item'>
+					<a href={{ l.fullname }} target='blank'>{{ l.linkname }}</a>
 					</li>
 					{% endfor %}
 				</ul>
