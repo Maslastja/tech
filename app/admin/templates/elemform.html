@@ -1,6 +1,6 @@
-{% extends "admin.html" %}
+{% extends 'admin.html' %}
 {% block body %}
-	<div class="column col-8">
+	<div class='column col-8'>
 		<h4>{{ title }}</h4>
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
@@ -9,20 +9,20 @@
 				{% endfor %}
 			{% endif %}
 		{% endwith %}
-		<div class="form-group">
+		<div class='form-group'>
 			{% for field in form %}
-				<div class="column col-3">
+				<div class='column col-3'>
 					{{ field.label }} 
 					{{ field }}
 					{% for error in field.errors %}
-					<span class="text-error">[{{ error }}]</span>
+					<span class='text-error'>[{{ error }}]</span>
 					{% endfor %}
 				</div>
 			{% endfor %}
 		</div>
-		<div class="panel-footer">
-			<button type="submit" class="btn btn-primary" name="save">Сохранить</button>
-			<button type="submit" class="btn" name="back">Отмена</button>
+		<div class='panel-footer'>
+			<button type='submit' class='btn btn-primary' name='save'>Сохранить</button>
+			<button type='submit' class='btn' name='back'>Отмена</button>
 		</div>
 	</div> 
 {% endblock %}

@@ -1,8 +1,8 @@
-{% extends "admin.html" %}
+{% extends 'admin.html' %}
 {% block body %}
-	<div class="columns">	
-		<div class="column col-8 col-mr-auto">
-			<button type="submit" class="btn btn-link" name="addlink"><i class="icon icon-plus"></i> Добавить</button>
+	<div class='columns'>	
+		<div class='column col-8 col-mr-auto'>
+			<button type='submit' class='btn btn-link' name='addlink'><i class='icon icon-plus'></i> Добавить</button>
 			{% with messages = get_flashed_messages() %}
 			   {% if messages %}
 			      {% for message in messages %}
@@ -10,8 +10,8 @@
 			      {% endfor %}
 			   {% endif %}
 			{% endwith %}
-			<table class="table table-striped table-hover">
-				<tr class="text-center">
+			<table class='table table-striped table-hover'>
+				<tr class='text-center'>
 					<th>наименование</th>
 					<th>полный адрес</th>
 					<th>тип</th>
@@ -25,18 +25,18 @@
 						<td>{{ l.fullname }}</td>
 						<td>{{ l.typelink }}</td>
 						{% if l.isactive == True %}						
-							<td class="text-center">Да</td>
+							<td class='text-center'>Да</td>
 						{% else %}
-							<td class="text-center">Нет</td>
+							<td class='text-center'>Нет</td>
 						{% endif %}
-						<td class="text-center">
-							<button type="submit" class="btn btn-link" name="changesub" value={{ l.id }}>
-								<i class="icon icon-edit"></i>
+						<td class='text-center'>
+							<button type='submit' class='btn btn-link' name='changesub' value={{ l.id }}>
+								<i class='icon icon-edit'></i>
 							</button>					
 						</td>						
-						<td class="text-center">
-							<button type="submit" class="btn btn-link" name= "delsub" value = {{ l.id }}>
-								<i class="icon icon-delete"></i>
+						<td class='text-center'>
+							<button type='submit' class='btn btn-link' name= 'delsub' value = {{ l.id }}>
+								<i class='icon icon-delete'></i>
 							</button>					
 						</td>						
 					</tr>

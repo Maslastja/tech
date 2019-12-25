@@ -1,6 +1,6 @@
-{% extends "admin.html" %}
+{% extends 'admin.html' %}
 {% block body %}
-	<div class="column col-8 col-mr-auto">
+	<div class='column col-8 col-mr-auto'>
 		{% with messages = get_flashed_messages() %}
 		   {% if messages %}
 		      {% for message in messages %}
@@ -8,8 +8,8 @@
 		      {% endfor %}
 		   {% endif %}
 		{% endwith %}
-		<button type="submit" class="btn btn-link" name="addtype"><i class="icon icon-plus"></i> Добавить</button>
-		<table class="table table-striped table-hover">
+		<button type='submit' class='btn btn-link' name='addtype'><i class='icon icon-plus'></i> Добавить</button>
+		<table class='table table-striped table-hover'>
 			<tr>
 				<th>№</th>
 				<th>тип</th>
@@ -27,13 +27,13 @@
 						<td>нет</td>
 					{% endif %}
 					<td>
-						<button type="submit" class="btn btn-link" name="changesub" value={{ t.id }}>
-							<i class="icon icon-edit"></i>
+						<button type='submit' class='btn btn-link' name='changesub' value={{ t.id }}>
+							<i class='icon icon-edit'></i>
 						</button>					
 					</td>						
 					<td>
-						<button type="submit" class="btn btn-link" name= "delsub" value = {{ t.id }}>
-							<i class="icon icon-delete"></i>
+						<button type='submit' class='btn btn-link' name= 'delsub' value = {{ t.id }}>
+							<i class='icon icon-delete'></i>
 						</button>					
 					</td>
 				</tr>
