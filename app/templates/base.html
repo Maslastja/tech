@@ -38,27 +38,6 @@
 				      });	
 			 }
 		</script>  	
-	   <script type="text/javascript">
-	       window.addEventListener("DOMContentLoaded", function() {
-		            var nodes = document.querySelectorAll(".parent");
-		            var num_scroll;
-		            [].forEach.call(nodes, function(tr) {
-		                var box = [],
-		                    next = tr.nextElementSibling;
-		                while (next && next.classList.contains("box")) {
-		                    box.push(next);
-		                    next = next.nextElementSibling;
-		                }
-		                tr.querySelector("td a").addEventListener("click", function(event) {
-		                 event.preventDefault();
-		                 box.forEach(function(item){
-		                 item.classList.toggle("show");
-		                });
-		                tr.scrollIntoView();
-		                },false)
-		            })
-		        });	    
-		</script>
 	</head>
 	<body>
 		{#{{ session['sid'] }}#}
