@@ -1,10 +1,7 @@
-from flask import (render_template, request, Response, current_app, redirect,
+from flask import (render_template, request, redirect,
                    url_for, session)
 import requests
-import urllib.request
 import json
-from smb.SMBHandler import SMBHandler
-from app.phonebook.func import pars_phone
 from app.admin.forms import PhoneForm
 from app.models.phones import Phones
 
@@ -17,57 +14,6 @@ types = {
     'serv': 'Вспомогательные службы',
     'nonmed': 'Немедицинский'
     }
-
-
-# def phones():
-    # phones = pars_phone()
-    # print(phones[1])
-    # for el in phones[0]:
-    # ph = Phones(idfil='irk',
-    # idotd='irk.nonmed.54',
-    # typeotd='nonmed',
-    # nameabon=el['name'],
-    # numberin=el['tsokr'],
-    # numberout=el['tgorod'],
-    # isactive=True)
-    # ph.save()
-    # for otd in phones[1]:
-    # for el in otd['tnumb']:
-    # ph = Phones(idfil='irk',
-    # idotd='irk.nonmed.54',
-    # typeotd='nonmed',
-    # comment=otd['name'],
-    # nameabon=el['name'],
-    # numberin=el['tsokr'],
-    # numberout=el['tgorod'],
-    # isactive=True)
-    # ph.save()
-
-    # return render_template('phones.html', phones=phones[0],
-                           # phonesotd=phones[1])
-
-
-# def load_phones():
-    # type_ph = request.args.get('type_phone')
-
-    # director = urllib.request.build_opener(SMBHandler)
-    # if type_ph == 'irk':
-        # doc = director.open(current_app.config['PHONE_IRK'])
-        # return Response(
-            # doc,
-            # mimetype='spreadsheet/ods',
-            # headers={'Content-disposition':
-                     # 'attachment; filename=phones.ods'})
-
-    # if type_ph == 'ang':
-        # doc = director.open(current_app.config['PHONE_ANG'])
-    # else:
-        # doc = director.open(current_app.config['PHONE_BR'])
-
-    # return Response(doc,
-                    # mimetype='application/vnd.ms-excel',
-                    # headers={'Content-disposition':
-                             # 'attachment; filename=phones.xls'})
 
 
 def get_filials():

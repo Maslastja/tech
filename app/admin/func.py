@@ -24,29 +24,6 @@ def find_all_types(tab):
     return types
 
 
-# возврат всего списка ссылок
-# def find_all_links():
-    # sel = (Link
-           # .select(Link.id,
-                   # Link.linkname,
-                   # Link.fullname,
-                   # Link.isactive,
-                   # TypeLinks.typename.alias('typelink'))
-           # .join(TypeLinks)
-           # .order_by(Link.typelink, Link.linkname)
-           # .namedtuples())
-
-    # links = []
-    # for l in sel:
-        # links.append({'id': l.id,
-                      # 'linkname': l.linkname,
-                      # 'fullname': l.fullname,
-                      # 'typelink': l.typelink,
-                      # 'isactive': l.isactive})
-
-    # return links
-
-
 # возврат всего списка ссылок ajax
 def links_ajax(typelink):
     sel = (Link
