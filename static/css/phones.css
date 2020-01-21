@@ -22,6 +22,20 @@ td.xl {
 
 th.sm,
 td.sm {
-	text-align: center;
   	width: 25vw;
 }
+
+th.but,
+th.pop,
+td.but,
+td.pop {
+  	width: 35px;
+  	border-bottom: .0rem;
+}
+
+a.linksotd {
+	text-align: left;
+	text-decoration: none;
+	white-space: pre-wrap;
+}
+

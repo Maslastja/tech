@@ -1,5 +1,6 @@
 {% extends 'admin.html' %}
 {% block body %}
+<form action='' method='post' novalidate>
 	<div class='column col-8 col-mr-auto'>
 		{% with messages = get_flashed_messages() %}
 		   {% if messages %}
@@ -40,4 +41,5 @@
 			{% endfor %}
 		</table>        
 	</div> 
+</form>
 {% endblock %}

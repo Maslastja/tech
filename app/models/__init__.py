@@ -3,6 +3,7 @@ from app.models.news import News
 from app.models.instructions import Instruction
 from app.models.types import TypeLinks, TypeNews
 from app.models.calendar import Calendar
+from app.models.phones import Phones
 
 
 def all_models():
@@ -11,6 +12,7 @@ def all_models():
     ArModels.append(TypeLinks)
     ArModels.append(TypeNews)
     ArModels.append(Calendar)
+    ArModels.append(Phones)
 
     # зависимые таблицы
     ArModels.append(Link)
