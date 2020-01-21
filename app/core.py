@@ -30,13 +30,6 @@ def create_app():
         if bp == 'admin' and not session.user:
             return redirect('/')
 
-    # @app.after_request
-    # def after_request(response):
-        # s = session.exist_session()
-        # if s:
-            # session.change_last_req()
-        # return response
-
     if not app.debug:
         @app.errorhandler(Exception)
         def handle_error(e):

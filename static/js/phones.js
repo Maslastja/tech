@@ -215,7 +215,6 @@ function addTable(ph, idotd) {
 		} else {
 			var butcomm = '';	
 		}
-
 				
 		$('#tableph > tbody').append(`<tr id=${ph[el]['id']} onclick=clicktr("${ph[el]['id']}")>
 													<td class="special">${ph[el]['nameabon']}</td>
