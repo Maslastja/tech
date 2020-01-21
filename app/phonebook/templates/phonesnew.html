@@ -1,0 +1,63 @@
+{% set navname = 'navphones' %}
+{% extends "base.html" %}
+{% block content %}
+ 	<script src={{ url_for('static',filename='js/phones.js') }}></script>  	
+		
+	{% if session.user and 'SYS' in session.user.roles %}
+		<script>
+			function clicktr(idtr) {
+					//let cell = $("td.but", $('#'+idtr));   		
+			  		//if ($("button", cell).length == 0) { 
+					//	$("button.cell", $('table')).remove();					
+			 	//		cell.append(`<button type="submit" class="btn btn-link cell" name="changesub" value=${idtr}><i class="icon icon-edit"></i></button>`);
+			 		//}
+					if ($("td.but", $('#'+idtr)).length == 0) {
+						$(".but", $('table')).remove();					
+						$('#'+idtr).append(`<td class="special but">
+													<button type="submit" class="btn btn-link cell" name="changesub" value=${idtr}><i class="icon icon-edit"></i></button>
+												</td>`);				   		
+						$('#'+idtr).append(`<td class="special but">
+													<button type="submit" class="btn btn-link cell" name="delsub" value=${idtr}><i class="icon icon-delete"></i></button>
+												</td>`);				   		
+			 		}
+			}
+		</script>
+	{% else %}	
+		<script>
+			function clicktr(idtr) {
+			}
+		</script>
+	{% endif %}
+	<form action='' method='post' novalidate>
+		<div class='columns'>
+			<div class='column col-2'>	
+				<label for='fil'>филиалы</label>
+				<select id='fil' name='fil' class='form-select' onchange='changesel(); selotd();'>
+				{#<option value="">не выбрано</option>#}
+				{% for el in fil %}
+					<option value={{ el }}>{{ fil[el] }}</option>	
+				{% endfor %}
+				</select>
+			</div>
+			<div class='column col-2'>
+				<label for='typeotd'>тип отделения</label>
+				<select id='typeotd' name='typeotd' class='form-select' onchange='changesel(); selotd();'>
+				<option value=''>не выбрано</option>	
+				{% for el in types %}
+					<option value={{ el }}>{{ types[el] }}</option>	
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+		<br>
+		{% if session.user and 'SYS' in session.user.roles %}
+			<button type="submit" class="btn btn-link cell" name="addsub"><i class="icon icon-plus"></i> Добавить</button>
+		{% endif %}
+		<div class='columns otdels'>	
+			<div class='column col-4' id="otdeleniya1"></div>
+			<div class='column col-4' id="otdeleniya2"></div>
+			<div class='column col-4' id="otdeleniya3"></div>
+		</div>
+		<br>
+	</form>
+{% endblock %} 

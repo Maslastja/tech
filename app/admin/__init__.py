@@ -12,6 +12,8 @@ bp.add_url_rule('/type', view_func=views.open_type,
                 methods=['GET', 'POST'])
 bp.add_url_rule('/links', view_func=views.get_links,
                 methods=['GET', 'POST'])
+bp.add_url_rule('/get_links', view_func=views.get_links_ajax,
+                methods=['GET'])
 bp.add_url_rule('/links/link', view_func=views.open_link,
                 methods=['GET', 'POST'])
 

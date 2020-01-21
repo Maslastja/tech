@@ -1,11 +1,12 @@
-from wtforms import widgets
-from wtforms.validators import ValidationError, DataRequired
+from wtforms import widgets, SelectField, BooleanField
+from wtforms.validators import ValidationError, DataRequired, Email
 from wtfpeewee.orm import model_form
 from app.models.types import TypeLinks
 from app.models.links import Link
 from app.models.news import News
 from app.models.instructions import Instruction
 from app.models.calendar import Calendar
+from app.models.phones import Phones
 
 
 def validate_time(form, field):
@@ -35,9 +36,11 @@ def validate_time(form, field):
 TypesForm = model_form(TypeLinks, field_args={
     'typename': dict(
         label='тип',
+        render_kw={'class': 'form-input'},
         validators=[DataRequired('значение не заполнено')]),
     'typecode': dict(
         label='код типа',
+        render_kw={'class': 'form-input'},
         validators=[DataRequired('значение не заполнено')]),
     'isactive': dict(label='активный')
 })
@@ -47,14 +50,15 @@ LinkForm = model_form(Link, exclude=('user', 'createdate', 'changedate'),
                       field_args={
                         'linkname': dict(
                             label='наименование',
+                            render_kw={'class': 'form-input'},
                             validators=[DataRequired('значение не заполнено')]
                             ),
                         'fullname': dict(
                             label='полный адрес',
+                            render_kw={'class': 'form-input'},
                             validators=[DataRequired('значение не заполнено')]
                             ),
-                        'typelink': dict(label='тип ссылки',
-                                         widget=widgets.Select()),
+                        'typelink': dict(label='тип ссылки'),
                         'isactive': dict(label='активная')
                       })
 
@@ -63,6 +67,7 @@ NewsForm = model_form(News, exclude=('user', 'createdate', 'changedate'),
                       field_args={
                         'name': dict(
                             label='заголовок новости',
+                            render_kw={'class': 'form-input'},
                             validators=[DataRequired('значение не заполнено')]
                             ),
                         'typenews': dict(label='тип новости',
@@ -80,6 +85,7 @@ InstructionForm = model_form(
     field_args={
         'name': dict(
             label='заголовок инструкции',
+            render_kw={'class': 'form-input'},
             validators=[DataRequired('значение не заполнено')]),
         'isactive': dict(label='активная'),
         'text': dict(
@@ -108,8 +114,50 @@ CalendarForm = model_form(
                         validate_time]),
         'event': dict(
             label='мероприятие',
+            render_kw={'class': 'form-input'},
             validators=[DataRequired('значение не заполнено')]
             ),
-        'resp': dict(label='ответственный'),
-        'comment': dict(label='комментарий')
+        'resp': dict(label='ответственный', render_kw={'class': 'form-input'}),
+        'comment': dict(label='комментарий', render_kw={'class': 'form-input'})
     })
+
+
+PhoneForm = model_form(
+    Phones,
+    exclude=('idfil', 'idotd', 'typeotd', 'namefil', 'nameotd'),
+    field_args={
+        'nameabon': dict(
+            label='абонент',
+            render_kw={'class': 'form-input', 'autocomplete': 'off'},
+            validators=[DataRequired('значение не заполнено')]),
+        'numberin': dict(
+            label='внутренний',
+            render_kw={'class': 'form-input'}),
+        'numberout': dict(
+            label='внешний',
+            render_kw={'class': 'form-input'}),
+        'email': dict(
+            label='почта',
+            render_kw={'class': 'form-input', 'type': 'email'},
+            validators=[Email('некорректный email')]),
+        'comment': dict(
+            label='комментарий',
+            render_kw={'class': 'form-input'}),
+        'isgeneral': dict(label='начальник отдела')
+    })
+PhoneForm.fil = SelectField(
+    'филиал',
+    render_kw={'class': 'form-select', 'onchange': 'selotdPhoneForm()'},
+    validators=[DataRequired('значение не выбрано')]
+)
+PhoneForm.typeotd = SelectField(
+    'тип отделения',
+    render_kw={'class': 'form-select', 'onchange': 'selotdPhoneForm()'},
+    validators=[DataRequired('значение не выбрано')]
+)
+PhoneForm.otd = SelectField(
+    'отделение',
+    render_kw={'class': 'form-select'},
+    validators=[DataRequired('значение не выбрано')]
+)
+PhoneForm.isactive = BooleanField('активный')

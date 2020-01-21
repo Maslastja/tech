@@ -4,7 +4,8 @@ from app.admin.forms import TypesForm, LinkForm
 from app.models.links import Link
 from app.models.news import News
 from app.models.types import TypeLinks, TypeNews
-from app.admin.func import find_all_types, find_all_links
+# from app.admin.func import find_all_types, find_all_links, links_ajax
+from app.admin.func import find_all_types, links_ajax
 
 
 # ---------------------------------TYPES------------------------------------- #
@@ -93,8 +94,18 @@ def open_type():
 
 
 # ----------------------------------LINKS------------------------------------ #
+def get_links_ajax():
+    typelink = request.args.get('typelink')
+    return links_ajax(typelink)
+
+
 def get_links():
-    links = find_all_links()
+    types = find_all_types('links')
+    typeslinks = {}
+    for el in types:
+        typeslinks[el['id']] = el['typename']
+
+    # links = find_all_links()
     if request.method == 'POST':
         dictform = dict(request.form)        if 'changesub' in request.form:
             valuesub = dictform['changesub']
@@ -111,8 +122,10 @@ def get_links():
 
         return redirect(url)
 
-    return render_template('linkslist.html', links=links, subname='links',
-                           title='Список ссылок')
+    # return render_template('linkslist.html', links=links, subname='links',
+                           # title='Список ссылок', types=typeslinks)
+    return render_template('linkslist.html', subname='links',
+                           title='Список ссылок', types=typeslinks)
 
 
 def open_link():

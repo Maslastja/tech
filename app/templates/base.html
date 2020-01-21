@@ -10,34 +10,22 @@
 		<link rel="stylesheet" href={{ url_for('static',filename='css/phones.css') }} type="text/css" >
  		<script src='//static.iood.ru/jquery/3.4.1/jquery.min.js'></script>
 		{% if session.user and 'SYS' in session.user.roles %}
-		<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
- 		<script>tinymce.init({
-  									selector:'textarea#redactor', 
-   								plugins: ["advlist autolink lists link image charmap print preview anchor", 
-  												"link searchreplace visualblocks code fullscreen insertdatetime",
-  												"media table paste code help wordcount"],
-  									toolbar: 'undo redo | formatselect | ' +
-  												' bold italic backcolor | alignleft aligncenter ' +
-  												' alignright alignjustify | bullist numlist outdent indent |' +
-  												' removeformat | link | help',
-  									language: "ru"
-									});
-		</script>
+			<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
+			<script>
+	 					tinymce.init({
+	  									selector:'textarea#redactor', 
+	   								plugins: ["advlist autolink lists link image charmap print preview anchor", 
+	  												"link searchreplace visualblocks code fullscreen insertdatetime",
+	  												"media table paste code help wordcount"],
+	  									toolbar: 'undo redo | formatselect | ' +
+	  												' bold italic backcolor | alignleft aligncenter ' +
+	  												' alignright alignjustify | bullist numlist outdent indent |' +
+	  												' removeformat | link | help',
+	  									language: "ru"
+										});
+			</script>
    	{% endif %}
-		<script type="text/javascript">
-			function logout() {
-					     $.ajax({
-				        type: 'post',
-				        url: '//auth.iood.ru/user/logout',
-				        headers: {'X-Requested-With': 'XMLHttpRequest'},
-				        xhrFields: {withCredentials: true},
-				        crossDomain: true
-				      }).done(function(resp) {
-		 					$('#logout').attr('href', '/login').text('Вход');
-							location.reload();										
-				      });	
-			 }
-		</script>  	
+ 		<script src={{ url_for('static',filename='js/allusers.js') }}></script>  	
 	</head>
 	<body>
 		{#{{ session['sid'] }}#}
@@ -49,41 +37,52 @@
 				<div class="column col-11 col-mr-auto">
 					<nav class="navbar">
 						<section class="navbar-section">
-							{% if navname == 'navindex' %}
-								<a name="navindex" href="/" class="btn active">Техническая страница</a>
-							{% else %}
-								<a name="navindex" href="/" class="btn btn-link">Техническая страница</a>
-							{% endif %}
-							{% if navname == 'navschedule' %}							
-								<a name="navschedule" href={{ url_for('calendar.start_page') }} class="btn active">Расписание конференц-зала</a>
-							{% else %}
-								<a name="navschedule" href={{ url_for('calendar.start_page') }} class="btn btn-link">Расписание конференц-зала</a>
-							{% endif %}
-							{% if navname == 'navfaq' %}							
-								<a name="navfaq" href={{ url_for('instructions.start_page') }} class="btn active">Инструкции</a>
-							{% else %}
-								<a name="navfaq" href={{ url_for('instructions.start_page') }} class="btn btn-link">Инструкции</a>
-							{% endif %}
-							{% if navname == 'navphones' %}							
-								<a name="navphones" href={{ url_for('phonebook.phones') }} class="btn active">Телефонный справочник</a>
-							{% else %}
-								<a name="navphones" href={{ url_for('phonebook.phones') }} class="btn btn-link">Телефонный справочник</a>
-							{% endif %}
-							{% if session.user and 'SYS' in session.user.roles %}
-								{% if navname == 'navadm' %}
-									<a name="navadm" href={{ url_for('admin.start_page') }} class="btn active">Администрирование</a>
+							<ul class="tab">
+								<li class="tab-item">
+								{% if navname == 'navindex' %}
+									<a name="navindex" href="/" class="active">Главная</a>
 								{% else %}
-									<a name="navadm" href={{ url_for('admin.start_page') }} class="btn btn-link">Администрирование</a>
+									<a name="navindex" href="/">Главная</a>
 								{% endif %}
-							{% endif %}
+								</li>
+								<li class="tab-item">
+									{% if navname == 'navschedule' %}						
+										<a name="navschedule" href={{ url_for('calendar.start_page') }} class="active">Конференц-зал</a>
+									{% else %}
+										<a name="navschedule" href={{ url_for('calendar.start_page') }}>Конференц-зал</a>
+									{% endif %}
+								</li>
+								<li class="tab-item">
+									{% if navname == 'navfaq' %}							
+										<a name="navfaq" href={{ url_for('instructions.start_page') }} class="active">Инструкции</a>
+									{% else %}
+										<a name="navfaq" href={{ url_for('instructions.start_page') }}>Инструкции</a>
+									{% endif %}
+								</li>
+								<li class="tab-item">
+									{% if navname == 'navphones' %}							
+										<a name="navphones" href={{ url_for('phonebook.phonesnew') }} class="active">Телефонный справочник</a>
+									{% else %}
+										<a name="navphones" href={{ url_for('phonebook.phonesnew') }}>Телефонный справочник</a>
+									{% endif %}
+								</li>
+								{% if session.user and 'SYS' in session.user.roles %}
+									<li class="tab-item">
+										{% if navname == 'navadm' %}
+											<a name="navadm" href={{ url_for('admin.start_page') }} class="active">Администрирование</a>
+										{% else %}
+											<a name="navadm" href={{ url_for('admin.start_page') }}>Администрирование</a>
+										{% endif %}
+									</li>
+								{% endif %}
+							</ul>
 						</section>
 						<section class="navbar-section">							
-							{% if session['user'] %}
-								<button id='logout' class='btn btn-link' onclick='logout()'>{{ session['user']['sign'] }} | Выход</button>
+							{% if session.user %}
+								<button id='logout' class='btn btn-link' onclick='logout()'>{{ session.user.sign }} | Выход</button>
 							{% else %}
 								<a id='logout' href={{ url_for('auth.login') }} class='btn btn-link'>Вход</a>
 							{% endif %}
-
 						</section>
 					</nav>
 				</div>

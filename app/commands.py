@@ -38,28 +38,3 @@ def create_table(name):
                 mod.insert(typename=types.get(t), typecode=t).execute()
     else:
         print('таблица не существует')
-
-
-@dbase.command()
-@click.argument('login')
-def create_admin(login):
-    create_user_in_db(login, True)
-
-
-@dbase.command()
-@click.argument('login')
-def create_user(login):
-    create_user_in_db(login, False)
-
-
-def create_user_in_db(login, isadmin):
-    password = click.prompt('Задайте пароль', hide_input=True)
-    confirm = click.prompt('Подтвердите пароль', hide_input=True)
-    if password != confirm:
-        raise click.BadParameter('Пароль не совпадает')
-    u = models.User(username=login,
-                    pwd=password,
-                    isadmin=isadmin)
-    u.save()
-    str_isadmin = 'администратор' if isadmin else 'пользователь'
-    click.echo(f'Создан {str_isadmin}: {login}')

@@ -25,6 +25,7 @@ def pars_phone():
     director = urllib.request.build_opener(SMBHandler)
     fh = director.open(current_app.config['PHONE_IRK'])
     doc = load(fh)
+    # doc = load('/home/Maslastja/Документы/телефоны 2019.ods')
     fh.close()
     rows = doc.getElementsByType(TableRow)
     columns = doc.getElementsByType(TableColumn)

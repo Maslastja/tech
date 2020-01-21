@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% set navname='navschedule' %}
 {% block content %}
-	<div class='column col-8'>
+	<div class='column col-5'>
 		<h4>{{ title }}</h4>
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
@@ -12,14 +12,14 @@
 		{% endwith %}
 	<form action='' method='post' novalidate class='form-horizontal'>
 			{% for field in form %}
-			<div class='column'>
-				{{ field.label }} 
-				{{ field }} 
-				{% for error in field.errors %}
-					<span class='text-error'>[{{ error }}]</span>
-				{% endfor %}
-			</div>
-			<br>
+				<div class='form-group'>
+					<div class="column col-2">{{ field.label }}</div>
+					<div class="col-5 col-sm-12">{{ field }} 
+						{% for error in field.errors %}
+							<span class='text-error'>[{{ error }}]</span>
+						{% endfor %}
+					</div>	
+				</div>
 			{% endfor %}
 		<div class='panel-footer'>
 			<button type='submit' class='btn btn-primary' name='save'>Сохранить</button>

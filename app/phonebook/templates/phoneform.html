@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set navname='navphones' %}
+{% block content %}
+ 	<script src={{ url_for('static',filename='js/phones.js') }}></script>  	
+	<div class='column col-6'>
+		<h4>{{ title }}</h4>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<form class="form-horizontal" action='' method='post' novalidate>
+			<div class='column col-12'>
+				{% for field in form %}
+					{% if field.name == 'otd' %}				
+						<div class="form-group">
+							<div class="col-2 col-sm-12">{{ field.label }}</div> 
+							<div class="col-10 col-sm-12">
+								{{ field }}
+								{% for error in field.errors %}
+								<span class='text-error'>[{{ error }}]</span>
+								{% endfor %}
+							</div> 
+						</div>
+					{% else %}
+						<div class="form-group">	
+							<div class="col-2 col-sm-12">{{ field.label }}</div> 
+							<div class="col-6 col-sm-12">
+								{{ field }}
+								{% for error in field.errors %}
+								<span class='text-error'>[{{ error }}]</span>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<br>
+			<div class='panel-footer'>
+				<button type='submit' class='btn btn-primary' name='save'>Сохранить</button>
+				<button type='submit' class='btn' name='back'>Отмена</button>
+			</div>
+		</form>
+	</div> 
+{% endblock %}

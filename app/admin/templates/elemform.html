@@ -1,5 +1,6 @@
 {% extends 'admin.html' %}
 {% block body %}
+<form action='' method='post' novalidate>
 	<div class='column col-8'>
 		<h4>{{ title }}</h4>
 		{% with messages = get_flashed_messages() %}
@@ -11,13 +12,27 @@
 		{% endwith %}
 		<div class='form-group'>
 			{% for field in form %}
-				<div class='column col-3'>
-					{{ field.label }} 
-					{{ field }}
-					{% for error in field.errors %}
-					<span class='text-error'>[{{ error }}]</span>
-					{% endfor %}
-				</div>
+				{% if field.id == 'fullname' %}					
+					<div class='column col-10'>
+						{{ field.label }}
+						{{ field }}	
+						{% for error in field.errors %}
+							<span class='text-error'>[{{ error }}]</span>
+						{% endfor %}
+					</div>
+				{% else %}				
+					<div class='column col-4'>
+						{{ field.label }}
+						{% if field.id == 'typelink' %}					
+							{{ field(class_="form-select") }}
+						{% else %}
+							{{ field }}	
+						{% endif %}
+						{% for error in field.errors %}
+							<span class='text-error'>[{{ error }}]</span>
+						{% endfor %}
+					</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 		<div class='panel-footer'>
@@ -25,4 +40,5 @@
 			<button type='submit' class='btn' name='back'>Отмена</button>
 		</div>
 	</div> 
+</form>
 {% endblock %}
