@@ -13,7 +13,7 @@
 	<form action='' method='post' novalidate class='form-horizontal'>
 			{% for field in form %}
 				<div class='form-group'>
-					<div class="column col-2">{{ field.label }}</div>
+					<div class="column col-3">{{ field.label }}</div>
 					<div class="col-5 col-sm-12">{{ field }} 
 						{% for error in field.errors %}
 							<span class='text-error'>[{{ error }}]</span>
