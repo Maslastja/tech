@@ -11,7 +11,8 @@ class Calendar(db.Model):
     comment = pw.CharField(null=True)
 
     class Meta:
-        db_table = 'calendar'
+        # db_table = 'calendar'
+        table_name = 'calendar'
 
     def __str__(self):
         return f'{self.day.strftime("%d.%m.%Y")} {self.event}'

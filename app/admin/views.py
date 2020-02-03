@@ -38,7 +38,6 @@ def get_types(tab):
 
         if 'addtype' in request.form:
             url = url_for('admin.open_type', tab=tab)
-
         return redirect(url)
 
     return render_template('typelist.html', types=types, subname=f'type{tab}',

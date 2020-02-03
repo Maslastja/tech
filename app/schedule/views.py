@@ -126,7 +126,6 @@ def start_page():
 
         if 'addevent' in request.form:
             url = url_for('calendar.open_event')
-        print(url)
         return redirect(url)
 
     return render_template('calendar.html', title='Расписание конференц-зала',

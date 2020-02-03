@@ -12,11 +12,13 @@ class Types(db.Model):
 
 class TypeLinks(Types):
     class Meta:
-        db_table = 'typelinks'
+        # db_table = 'typelinks'
+        table_name = 'typelinks'
         order_by = ('id')
 
 
 class TypeNews(Types):
     class Meta:
-        db_table = 'typenews'
+        # db_table = 'typenews'
+        table_name = 'typenews'
         order_by = ('id')
