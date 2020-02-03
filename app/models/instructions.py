@@ -11,7 +11,8 @@ class Instruction(db.Model):
     changedate = pw.DateTimeField()
 
     class Meta:
-        db_table = 'instructions'
+        # db_table = 'instructions'
+        table_name = 'instructions'
 
     def __str__(self):
         return self.name

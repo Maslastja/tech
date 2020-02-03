@@ -13,7 +13,8 @@ class Link(db.Model):
     changedate = pw.DateTimeField()
 
     class Meta:
-        db_table = 'links'
+        # db_table = 'links'
+        table_name = 'links'
         order_by = ('id')
 
     def __str__(self):

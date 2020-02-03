@@ -15,7 +15,8 @@ class Phones(db.Model):
     comment = pw.CharField(100, null=True)
 
     class Meta:
-        db_table = 'phones'
+        # db_table = 'phones'
+        table_name = 'phones'
         order_by = ('idotd', 'isgeneral', 'namefil')
 
     def __str__(self):

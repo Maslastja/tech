@@ -26,7 +26,7 @@ def make_resp(app, sid, method, url, **kwargs):
             app.logger.error('Error processing session data {}'.format(r.text))
         else:
             if not r.ok:
-                app.logger.warn('Error in session data: {}'.format(data))
+                app.logger.warning('Error in session data: {}'.format(data))
     # print(data)
     return data
 

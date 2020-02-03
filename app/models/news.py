@@ -13,7 +13,8 @@ class News(db.Model):
     changedate = pw.DateTimeField()
 
     class Meta:
-        db_table = 'news'
+        # db_table = 'news'
+        table_name = 'news'
         order_by = ('createdate')
 
     def __str__(self):
