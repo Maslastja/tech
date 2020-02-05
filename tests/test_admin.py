@@ -4,15 +4,16 @@ from app.models.links import Link
 
 
 def test_res200(client):
-    res = client.get('/admin', follow_redirects=True)
+    res = client.get('/admin/')
+    print(res.response._callbacks)
     assert res.status_code == 200
 
 
 def test_res200_tnews(client):
-    res = client.get('/admin/type/news', follow_redirects=True)
+    res = client.get('/admin/type/news')
     assert res.status_code == 200
 
-    res = client.get('/admin/type?tab=news', follow_redirects=True)
+    res = client.get('/admin/type?tab=news')
     assert res.status_code == 200
 
     res = client.post('/admin/type/news',
@@ -22,10 +23,10 @@ def test_res200_tnews(client):
 
 
 def test_res200_tlinks(client):
-    res = client.get('/admin/type/links', follow_redirects=True)
+    res = client.get('/admin/type/links')
     assert res.status_code == 200
 
-    res = client.get('/admin/type?tab=links', follow_redirects=True)
+    res = client.get('/admin/type?tab=links')
     assert res.status_code == 200
 
     res = client.post('/admin/type/links',
@@ -35,7 +36,7 @@ def test_res200_tlinks(client):
 
 
 def test_res200_links(client):
-    res = client.get('/admin/links', follow_redirects=True)
+    res = client.get('/admin/links')
     assert res.status_code == 200
 
     res = client.post('/admin/links',
@@ -43,10 +44,10 @@ def test_res200_links(client):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/admin/links/link', follow_redirects=True)
+    res = client.get('/admin/links/link')
     assert res.status_code == 200
 
-    res = client.get('/admin/get_links', follow_redirects=True)
+    res = client.get('/admin/get_links')
     assert res.status_code == 200
 
 
@@ -66,7 +67,7 @@ def test_dbtable_tnews(client):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/admin/type?id=1&tab=news', follow_redirects=True)
+    res = client.get('/admin/type?id=1&tab=news')
     assert res.status_code == 200
 
     res = client.post('/admin/type/news',
@@ -91,7 +92,7 @@ def test_dbtable_tlinks(client):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/admin/type?id=1&tab=links', follow_redirects=True)
+    res = client.get('/admin/type?id=1&tab=links')
     assert res.status_code == 200
 
     res = client.post('/admin/type/links',
@@ -120,7 +121,7 @@ def test_dbtable_links(client):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/admin/links/link?id=1', follow_redirects=True)
+    res = client.get('/admin/links/link?id=1')
     assert res.status_code == 200
 
     res = client.post('/admin/links',

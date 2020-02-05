@@ -3,15 +3,15 @@ from app.models.calendar import Calendar
 
 
 def test_res200(client, temp):
-    res = client.get('/calendar', follow_redirects=True)
+    res = client.get('/calendar/')
     assert res.status_code == 200
 
-    res = client.post('/calendar',
+    res = client.post('/calendar/',
                       data={'addevent': ''},
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/calendar/openevent', follow_redirects=True)
+    res = client.get('/calendar/openevent')
     assert res.status_code == 200
 
 
@@ -29,16 +29,16 @@ def test_dbtable(client, temp):
     item = Calendar.get_by_id(1)
     assert item is not None
 
-    res = client.post('/calendar',
+    res = client.post('/calendar/',
                       data={'changesub': '',
                             'evid': '1'},
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/calendar/openevent?id=1', follow_redirects=True)
+    res = client.get('/calendar/openevent?id=1')
     assert res.status_code == 200
 
-    res = client.post('/calendar',
+    res = client.post('/calendar/',
                       data={'delsub': '',
                             'evid': '1'},
                       follow_redirects=True)

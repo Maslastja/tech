@@ -3,15 +3,15 @@ from app.models.instructions import Instruction
 
 
 def test_res200(client):
-    res = client.get('/instructions', follow_redirects=True)
+    res = client.get('/instructions/')
     assert res.status_code == 200
 
-    res = client.post('/instructions',
+    res = client.post('/instructions/',
                       data={'addins': ''},
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/instructions/openins', follow_redirects=True)
+    res = client.get('/instructions/openins')
     assert res.status_code == 200
 
 
@@ -29,15 +29,15 @@ def test_dbtable(client, temp):
     item = Instruction.get_by_id(1)
     assert item is not None
 
-    res = client.post('/instructions',
+    res = client.post('/instructions/',
                       data={'changeins': '1'},
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/instructions/openins?id=1', follow_redirects=True)
+    res = client.get('/instructions/openins?id=1')
     assert res.status_code == 200
 
-    res = client.post('/instructions',
+    res = client.post('/instructions/',
                       data={'delins': '1'},
                       follow_redirects=True)
     assert res.status_code == 200
