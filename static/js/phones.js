@@ -27,7 +27,7 @@ function getphones(idotd) {
 		//запрос на получение телефонных номеров из БД		
 		$.ajax({
 		type: 'get',
-		url: '/phoneslist?idotd='+idotd+'',
+		url: '/phones/phoneslist?idotd='+idotd+'',
 		crossDomain: true
 		}).done(function(resp) {
 			var ph = JSON.parse(resp);	
@@ -120,7 +120,8 @@ function selotd() {
 					objSel.value = oldotd;						
 				}	
 			}
-			if (window.sessionStorage && document.URL.indexOf('phonesnew') != -1) {
+			//if (window.sessionStorage && document.URL.indexOf('phones') != -1 && document.URL.indexOf('open') == -1) {
+			if (window.sessionStorage && document.URL.indexOf('open') == -1) {
 				var myidotd = sessionStorage.getItem('idotdclick');
 				if (myidotd != null) {
 					getphones(myidotd);	

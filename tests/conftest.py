@@ -1,7 +1,11 @@
-import pytest
 import os
+import sys
+import pytest
 import requests
 import tempfile
+# добавление корневой папки в массив путей
+sys.path.append(os.path.abspath('.'))
+
 from flask import Flask
 from config.database import db, Collect
 from app.models import all_models
@@ -29,12 +33,8 @@ def client(temp):
     app = Flask('app', root_path=os.getcwd(),
                 static_folder='static',
                 template_folder='app/templates')
-    app.config['SESSION_COOKIE_NAME'] = 'sid'
-    app.config['SESSION_GET'] = 'http://auth.iood.ru/sess/get'
-    app.config['SESSION_STORE'] = 'http://auth.iood.ru/sess/update'
+    app.config.from_object('config.settings_test')
     app.config['DATABASE_URL'] = f'sqliteext:///{temp.name}'
-    app.config['SERVER_NAME'] = 'tech.iood.ru'
-    app.config['TESTING'] = True
     db.init_app(app)
     db.database.aggregate('collect')(Collect)
     db.database.create_tables(all_models())
@@ -50,7 +50,8 @@ def client(temp):
     app.session_interface = MySessionInterface()
 
     with app.test_client() as client:
-        ses = requests.post('http://auth.iood.ru/user/login',
-                            data={'login': 'masl', 'password': 'masav19'})
+        ses = requests.post(os.environ['AUTH'],
+                            data={'login': os.environ['LOGIN'],
+                                  'password': os.environ['PASSWORD']})
         client.set_cookie('tech.iood.ru', 'sid', value=ses.cookies['sid'])
         yield client

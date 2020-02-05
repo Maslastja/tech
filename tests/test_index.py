@@ -3,7 +3,7 @@ from app.models.news import News
 
 
 def test_res200(client):
-    res = client.get('/', follow_redirects=True)
+    res = client.get('/')
     assert res.status_code == 200
 
     res = client.post('/',
@@ -11,7 +11,7 @@ def test_res200(client):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/opennews', follow_redirects=True)
+    res = client.get('/opennews')
     assert res.status_code == 200
 
 
@@ -35,7 +35,7 @@ def test_dbtable(client, temp):
                       follow_redirects=True)
     assert res.status_code == 200
 
-    res = client.get('/opennews?id=1', follow_redirects=True)
+    res = client.get('/opennews?id=1')
     assert res.status_code == 200
 
     res = client.post('/',

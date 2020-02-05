@@ -1,5 +1,5 @@
 $(document).ready( function(){
-	if (document.URL.indexOf('phone') != -1) {
+	if (document.URL.indexOf('phones') != -1) {
 		selotd();
 		if (window.sessionStorage) {
 			if (sessionStorage.getItem('typelink') != null) {
