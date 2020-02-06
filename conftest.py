@@ -1,11 +1,7 @@
 import os
-import sys
 import pytest
 import requests
 import tempfile
-# добавление корневой папки в массив путей
-sys.path.append(os.path.abspath('.'))
-
 from flask import Flask
 from config.database import db, Collect
 from app.models import all_models
