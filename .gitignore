@@ -6,3 +6,4 @@ __pycache__
 img
 files
 db_techpage.sqlite
+.pytest_cache
