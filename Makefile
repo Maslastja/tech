@@ -27,7 +27,7 @@ flake:
 	flake8 --exclude=$(EXCL_PATH) $(ROOT_DIR)
 
 # создание виртуального окружения и установка пакетов
-	venv:
+venv:
 	mkdir .venv
 	cd .venv; virtualenv env
 	$(ACTIVATE_ENV); pip install -r requirements.txt 
