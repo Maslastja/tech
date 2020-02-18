@@ -2,14 +2,10 @@ ROOT_DIR:= .
 PYTHONPATH:= .
 VENV_DIR:= $(ROOT_DIR)/.venv/env/bin
 PIP_DIR:= $(VENV_DIR)/pip
-PYTHON_DIR:= $(VENV_DIR)/python
 FLASK_DIR:= $(VENV_DIR)/flask
 FLAKE_DIR:= $(VENV_DIR)/flake8
 PYTEST_DIR:= $(VENV_DIR)/pytest
 ACTIVATE_ENV:= . $(VENV_DIR)/activate
-
-# команда создания таблиц в БД
-COMMAND_BD= db create-all-tabs
 
 # директории и файлы, которые необходимо исключить при проверке кода flake8
 EXCL_PATH= .git,.venv,static,logs,.gitignore,__pycache__
@@ -23,7 +19,7 @@ help:
 	@echo "dbtest 	- проверяет существование БД, в случае когда БД не существует выдает сообщение 'database doesn't exist'"
 	@echo "flake 	- запуск тестов flake8"
 	@echo "env 	- создание виртуального окружения и установка пакетов из requirements.txt"
-	@echo "env_up - обновление пакетов виртуального окружения"
+	@echo "env_up 	- обновление пакетов виртуального окружения"
 	@echo "install - полная установка приложения (env -> new_bd -> test -> flake -> clean)"
 
 # очистка директорий проекта
@@ -44,7 +40,7 @@ run:
 
 # создание БД и таблиц
 new_bd: 
-	$(FLASK_DIR) $(COMMAND_BD)
+	$(FLASK_DIR) dbase create-all-tabs
 
 # проверка flake8  
 flake: 
