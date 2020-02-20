@@ -3,7 +3,7 @@ import click
 import app.models as models
 import subprocess as sp
 from flask.cli import AppGroup
-from config.database import db
+from config.database import db as database
 from config import settings
 from playhouse.db_url import connect, parse
 
@@ -61,7 +61,7 @@ def create_all_tabs():
     if check_db():
         ArModels = models.all_models()
         print(ArModels)
-        db.database.create_tables(ArModels)
+        database.database.create_tables(ArModels)
         for mod in ArModels:
             if (mod.__name__ == 'TypeLinks' and
                 mod.select().count() == 0):
