@@ -78,7 +78,7 @@ install: env create_db
 
 # запуск консоли базы данных
 shell_db:
-	$(FLASK) db shell_db
+	$(FLASK) db shell-db
 
 	
 	
