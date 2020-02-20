@@ -1,6 +1,6 @@
 ROOT_DIR:= .
 PYTHONPATH:= .
-VENV_DIR:= $(ROOT_DIR)/.venv/env/bin
+VENV_DIR:= $(ROOT_DIR)/.venv/bin
 PIP:= $(VENV_DIR)/pip
 FLASK:= $(VENV_DIR)/flask
 FLAKE:= $(VENV_DIR)/flake8
@@ -11,16 +11,17 @@ ACTIVATE_ENV:= . $(VENV_DIR)/activate
 EXCL_PATH= .git,.venv,static,logs,.gitignore,__pycache__
 
 help:
-	@echo "clean 	- удаление кеша"
-	@echo "test 	- запуск тестов pytest"
-	@echo "run 	- запуск сервера"
-	@echo "new_bd 	- создание таблиц при возможности подключения к БД"
-	@echo "dbshell - переход в консоль БД"
-	@echo "dbtest 	- проверяет существование БД, в случае когда БД не существует выдает сообщение 'database doesn't exist'"
-	@echo "flake 	- запуск тестов flake8"
-	@echo "env 	- создание виртуального окружения и установка пакетов из requirements.txt"
-	@echo "env_up 	- обновление пакетов виртуального окружения"
-	@echo "install - полная установка приложения (env -> new_bd -> test -> flake -> clean)"
+	@echo "clean 	   - удаление кеша"
+	@echo "test 	   - запуск тестов pytest"
+	@echo "run 	   - запуск сервера"
+	@echo "create_db   - создание таблиц при возможности подключения к БД"
+	@echo "shell_db    - переход в консоль БД"
+	@echo "flake 	   - запуск тестов flake8"
+	@echo "env 	   - создание виртуального окружения и установка пакетов из requirements.txt"
+	@echo "env_up 	   - обновление пакетов виртуального окружения"
+	@echo "env_list	   - выводит на экран список установленных пакетов в виртуальное окружение"
+	@echo "env_install - устанавливает/обновляет пакеты в виртуальное окружение"
+	@echo "install 	   - полная установка приложения (env -> create_db)"
 
 # очистка директорий проекта
 clean:
@@ -29,7 +30,7 @@ clean:
 
 # тестирование pytest
 test: 
-	@if ! [[ -f './.venv/env/bin/pytest' ]]; then\
+	@if ! [[ -f './.venv/bin/pytest' ]]; then\
 		$(PIP) install pytest;\
 	fi
 	$(ACTIVATE_ENV); PYTHONPATH=. pytest -v
@@ -39,20 +40,19 @@ run:
 	$(FLASK) run
 
 # создание БД и таблиц
-new_bd: 
-	$(FLASK) dbase create-all-tabs
+create_db: 
+	$(FLASK) db create-all-tabs
 
 # проверка flake8  
 flake: 
-	@if ! [[ -f './.venv/env/bin/flake8' ]]; then\
+	@if ! [[ -f './.venv/bin/flake8' ]]; then\
 		$(PIP) install flake8;\
 	fi
 	$(FLAKE) --exclude=$(EXCL_PATH) $(ROOT_DIR)
 
 # создание виртуального окружения и установка пакетов
-env:
-	mkdir .venv
-	cd .venv; virtualenv env
+env: 
+	python3 -m venv .venv
 	$(PIP) install -r requirements.txt 
 
 # обновление пакетов виртуального окружения
@@ -60,21 +60,27 @@ env_up:
 	$(PIP) install --upgrade pip
 	$(PIP) install --upgrade setuptools
 	$(PIP) install --upgrade wheel
-	$(PIP) freeze > requirements.txt
-	$(PIP) install -r requirements.txt --upgrade
 
-install: env new_bd test flake clean
+# вывод списка установленных пакетов
+env_list:
+	$(PIP) list
+
+# установка/обновление пакетов
+env_install:
+	@if [ "${PACK_NAME}" ]; then\
+		$(PIP) install $(PACK_NAME) --upgrade;\
+	else\
+		echo 'необходимо указать название пакета: make pip_install PACK_NAME=*name*';\
+	fi
+	
+# полная установка приложения (виртаульное окружение, база данных)
+install: env create_db
 	env
-	new_bd
-	test
-	flake
-	clean
+	create_db
 
+# запуск консоли базы данных
+shell_db:
+	$(FLASK) db shell_db
 
-dbshell:
-	$(FLASK) dbase dbshell
-
-dbtest:
-	$(FLASK) dbase test
 	
 	
