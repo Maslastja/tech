@@ -75,8 +75,6 @@ env_install:
 	
 # полная установка приложения (виртаульное окружение, база данных)
 install: env create_db
-	env
-	create_db
 
 # запуск консоли базы данных
 shell_db:
