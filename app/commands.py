@@ -8,7 +8,7 @@ from config import settings
 from playhouse.db_url import connect, parse
 
 
-dbase = AppGroup('dbase')
+dbase = AppGroup('db')
 # по умолчанию добавить значения
 types = {1: 'ссылки ИООД',
          2: 'ссылки Здравоохранение',
@@ -21,7 +21,7 @@ def check_db():
     db = connect(settings.DATABASE)
     try:
         db.connect()
-        print('database exist')
+        # print('database exist')
         return True
     except:
         print("database doesn't exist")
@@ -35,7 +35,7 @@ def test():
 
 
 @dbase.command()
-def dbshell():
+def shell_db():
     db_type = settings.DATABASE.split(':')[0]
     params = parse(settings.DATABASE)
     if db_type.startswith('postgres'):
