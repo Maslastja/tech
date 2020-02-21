@@ -23,7 +23,7 @@ def check_db():
         db.connect()
         # print('database exist')
         return True
-    except:
+    except Exception:
         print("database doesn't exist")
         return False
 
@@ -52,7 +52,7 @@ def shell_db():
         if params.get('password'):
             env['PGPASSWORD'] = params['password']
     command.append(params['database'])
-    sp.run(command, env = env)
+    sp.run(command, env=env)
 
 
 @dbase.command()
@@ -63,8 +63,7 @@ def create_all_tabs():
         print(ArModels)
         database.database.create_tables(ArModels)
         for mod in ArModels:
-            if (mod.__name__ == 'TypeLinks' and
-                mod.select().count() == 0):
+            if (mod.__name__ == 'TypeLinks' and mod.select().count() == 0):
                 for t in types:
                     mod.insert(typename=types.get(t), typecode=t).execute()
 
@@ -77,10 +76,8 @@ def create_table(name):
         mod = models.one_model(name)
         if mod is not None:
             mod.create_table()
-            if (name == 'TypeLinks' and
-                mod.select().count() == 0):
+            if (name == 'TypeLinks' and mod.select().count() == 0):
                 for t in types:
                     mod.insert(typename=types.get(t), typecode=t).execute()
         else:
             print('таблица не существует')
-
