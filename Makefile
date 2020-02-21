@@ -33,7 +33,7 @@ test:
 	@if ! [[ -f './.venv/bin/pytest' ]]; then\
 		$(PIP) install pytest;\
 	fi
-	$(ACTIVATE_ENV); PYTHONPATH=. pytest -v
+	$(ACTIVATE_ENV); PYTHONPATH=. pytest -v; deactivate
 	
 # запуск сервера
 run: 
