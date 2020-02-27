@@ -10,11 +10,14 @@ from playhouse.db_url import connect, parse
 
 dbase = AppGroup('db')
 # по умолчанию добавить значения
-types = {1: 'ссылки ИООД',
+types_l = {1: 'ссылки ИООД',
          2: 'ссылки Здравоохранение',
          3: 'дополнительные ссылки',
          4: 'файлы',
          5: 'видеоматериалы'}
+
+types_n = {1: 'новости',
+           2: 'конференции'}
 
 
 def check_db():
@@ -64,8 +67,11 @@ def create_all_tabs():
         database.database.create_tables(ArModels)
         for mod in ArModels:
             if (mod.__name__ == 'TypeLinks' and mod.select().count() == 0):
-                for t in types:
-                    mod.insert(typename=types.get(t), typecode=t).execute()
+                for t in types_l:
+                    mod.insert(typename=types_l.get(t), typecode=t).execute()
+            if (mod.__name__ == 'TypeNews' and mod.select().count() == 0):
+                for t in types_n:
+                    mod.insert(typename=types_n.get(t), typecode=t).execute()
 
 
 @dbase.command()
@@ -78,6 +84,9 @@ def create_table(name):
             mod.create_table()
             if (name == 'TypeLinks' and mod.select().count() == 0):
                 for t in types:
-                    mod.insert(typename=types.get(t), typecode=t).execute()
+                    mod.insert(typename=types_l.get(t), typecode=t).execute()
+            if (mod.__name__ == 'TypeNews' and mod.select().count() == 0):
+                for t in types_n:
+                    mod.insert(typename=types_n.get(t), typecode=t).execute()
         else:
             print('таблица не существует')
