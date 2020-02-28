@@ -11,10 +11,10 @@ from playhouse.db_url import connect, parse
 dbase = AppGroup('db')
 # по умолчанию добавить значения
 types_l = {1: 'ссылки ИООД',
-         2: 'ссылки Здравоохранение',
-         3: 'дополнительные ссылки',
-         4: 'файлы',
-         5: 'видеоматериалы'}
+           2: 'ссылки Здравоохранение',
+           3: 'дополнительные ссылки',
+           4: 'файлы',
+           5: 'видеоматериалы'}
 
 types_n = {1: 'новости',
            2: 'конференции'}
@@ -83,7 +83,7 @@ def create_table(name):
         if mod is not None:
             mod.create_table()
             if (name == 'TypeLinks' and mod.select().count() == 0):
-                for t in types:
+                for t in types_l:
                     mod.insert(typename=types_l.get(t), typecode=t).execute()
             if (mod.__name__ == 'TypeNews' and mod.select().count() == 0):
                 for t in types_n:
