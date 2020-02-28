@@ -3,4 +3,3 @@
  export LOGIN=*login*
 
  export PASSWORD=*password*
- 
