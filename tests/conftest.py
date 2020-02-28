@@ -46,7 +46,7 @@ def client(temp):
     app.session_interface = MySessionInterface()
 
     with app.test_client() as client:
-        ses = requests.post(os.environ['AUTH'],
+        ses = requests.post(app.config['AUTH'],
                             data={'login': os.environ['LOGIN'],
                                   'password': os.environ['PASSWORD']})
         client.set_cookie('tech.iood.ru', 'sid', value=ses.cookies['sid'])
