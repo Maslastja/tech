@@ -5,7 +5,7 @@ VENV_DIR:= $(VENV)/bin
 EXCL_PATH= .git,.venv,static,logs,.gitignore,__pycache__,.pytest_cache
 
 help:
-	@echo "Команды для управления проектом. Все команды (кроме env) предполагают активированное виртуальное окружение "
+	@echo "Команды для управления проектом. Все команды (кроме env, clean) предполагают активированное виртуальное окружение "
 	@echo "env         - создание виртуального окружения и установка пакетов из requirements/core.txt"
 	@echo "env_up      - обновление виртуального окружения"
 	@echo "env_prod    - установка пакетов prod-сервера из requirements/prod.txt"
@@ -54,25 +54,25 @@ env: requirements/core.txt
 	@$(VENV_DIR)/pip install -r requirements/core.txt 
 
 # загрузка пакетов prod
-env_prod: requirements/prod.txt
+env_prod: $(VENV) requirements/prod.txt
 	@pip install -r requirements/prod.txt
 	
 # загрузка пакетов dev
-env_dev: requirements/dev.txt
+env_dev: $(VENV) requirements/dev.txt
 	@pip install -r requirements/dev.txt
 
 # обновление пакетов виртуального окружения
-env_up: 
+env_up: $(VENV)
 	@pip install --upgrade pip
 	@pip install --upgrade setuptools
 	@pip install --upgrade wheel
 
 # вывод списка установленных пакетов
-env_list:
+env_list: $(VENV)
 	@pip list
 
 # установка/обновление пакетов
-env_install:
+env_install: $(VENV)
 	@if [ "${PACK_NAME}" ]; then\
 		pip install $(PACK_NAME) --upgrade;\
 	else\
@@ -85,7 +85,7 @@ prod: env_prod create_db clean
 dev: env_dev create_db clean
 
 # запуск консоли базы данных
-shell_db:
+shell_db: $(VENV)
 	flask db shell-db
 
 .PHONY: help clean run test env	
