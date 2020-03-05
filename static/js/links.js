@@ -19,7 +19,7 @@ function get_links() {
 		url: '/admin/get_links?typelink='+valtype+'',
 		crossDomain: true
 		}).done(function(resp) {
-			var query = JSON.parse(resp);	
+			var query = resp;	
 			for (el in query) {
 				$('#list').append(`<tr>
 										  	<td>${query[el]['linkname']}</td>
