@@ -30,7 +30,7 @@ function getphones(idotd) {
 		url: '/phones/phoneslist?idotd='+idotd+'',
 		crossDomain: true
 		}).done(function(resp) {
-			var ph = JSON.parse(resp);	
+			var ph = resp;	
 			if ($('i', document.getElementById(idotd))[0].className == 'icon icon-arrow-down') {		
 				if (window.sessionStorage) {
 				  	sessionStorage.setItem('idotdclick', idotd);

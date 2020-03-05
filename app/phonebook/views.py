@@ -1,5 +1,5 @@
 from flask import (render_template, request, redirect,
-                   url_for, session)
+                   url_for, session, jsonify)
 import requests
 import json
 from app.admin.forms import PhoneForm
@@ -60,9 +60,9 @@ def get_phones():
                        'numberin': el.numberin if el.numberin else '',
                        'numberout': el.numberout if el.numberout else '',
                        'email': el.email if el.email else ''})
-    ff = json.dumps(phones)
+    #ff = json.dumps(phones)
 
-    return ff
+    return jsonify(phones)
 
 
 def phonesnew():

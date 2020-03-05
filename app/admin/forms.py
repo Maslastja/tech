@@ -160,4 +160,4 @@ PhoneForm.otd = SelectField(
     render_kw={'class': 'form-select'},
     validators=[DataRequired('значение не выбрано')]
 )
-PhoneForm.isactive = BooleanField('активный')
+PhoneForm.isactive = BooleanField('активный', default=True)
