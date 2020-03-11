@@ -141,7 +141,7 @@ PhoneForm = model_form(
             render_kw={'class': 'form-input', 'type': 'email'},
             validators=[Email('некорректный email')]),
         'comment': dict(
-            label='комментарий',
+            label='ключ',
             render_kw={'class': 'form-input'}),
         'isgeneral': dict(label='начальник отдела')
     })
