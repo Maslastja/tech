@@ -2,8 +2,8 @@
 
 function changesel() {
 	if (window.sessionStorage) {
-	  	sessionStorage.setItem('fil', document.getElementById("fil").value);
-	  	sessionStorage.setItem('typeotd', document.getElementById("typeotd").value);
+	  	sessionStorage.setItem('fil', document.getElementById('fil').value);
+	  	sessionStorage.setItem('typeotd', document.getElementById('typeotd').value);
 	  	sessionStorage.removeItem('idotdclick');
 	}	
 }	
@@ -23,11 +23,11 @@ function getphones(idotd) {
   	}
   	
 		$('i', document.getElementById(idotd)).toggleClass("icon-arrow-right icon-arrow-down");
-	
+		var filval = document.getElementById('fil').value; 
 		//запрос на получение телефонных номеров из БД		
 		$.ajax({
 		type: 'get',
-		url: '/phones/phoneslist?idotd='+idotd+'',
+		url: '/phones/phoneslist?idotd='+idotd+'&valfil='+filval+'',
 		crossDomain: true
 		}).done(function(resp) {
 			var ph = resp;	
@@ -52,15 +52,15 @@ function selotd() {
 	$("#tableph > tbody").empty();
 	if (window.sessionStorage) {
 		if (sessionStorage.getItem('fil') != null) {	  	
-	  		document.getElementById("fil").value = sessionStorage.getItem('fil');
+	  		document.getElementById('fil').value = sessionStorage.getItem('fil');
 	  	}
 		if (sessionStorage.getItem('typeotd') != null) {	  	
-	  		document.getElementById("typeotd").value = sessionStorage.getItem('typeotd');
+	  		document.getElementById('typeotd').value = sessionStorage.getItem('typeotd');
 	  	}
 	}
-	var selfil = document.getElementById("fil");
+	var selfil = document.getElementById('fil');
 	var valfil = selfil.value;
-	var seltype = document.getElementById("typeotd");
+	var seltype = document.getElementById('typeotd');
 	if (seltype.value == "") {
 		var types = 'hosp,dhosp,amb,reanim,oper,serv,nonmed';
 	}
@@ -73,7 +73,7 @@ function selotd() {
 	crossDomain: true
 	}).done(function(resp) {
 			if ($('#otd').length > 0) {
-				var objSel = document.getElementById("otd");
+				var objSel = document.getElementById('otd');
 				//var selpust = (objSel.options[0].value == '') ? true : false;
 				var oldotd = objSel.options[0].value;
 				$('#otd').empty();						
@@ -132,9 +132,9 @@ function selotd() {
 }
 
 function selotdPhoneForm() {
-	var selfil = document.getElementById("fil");
+	var selfil = document.getElementById('fil');
 	var valfil = selfil.value;
-	var seltype = document.getElementById("typeotd");
+	var seltype = document.getElementById('typeotd');
 		if (seltype.value == "") {
 			var types = 'hosp,dhosp,amb,reanim,oper,serv,nonmed';
 		}
@@ -146,7 +146,7 @@ function selotdPhoneForm() {
 		url: '//struc.iood.ru/api/branch/'+valfil+'/deps?types='+types+'',
 		crossDomain: true
 		}).done(function(resp) {
-			var objSel = document.getElementById("otd");
+			var objSel = document.getElementById('otd');
 			$('#otd').empty();						
 			var employees = resp;
 			employees.sort(function(obj1, obj2) {
@@ -223,6 +223,100 @@ function addTable(ph, idotd) {
 							 						<td class="special sm text-center">${ph[el]['numberin']}</td>
 							 						${butmail}
 							 						${butcomm}
+												</tr>`);		
+		if (ph[el]['isactive']) {
+			if (ph[el]['isgeneral']) {	
+				$('#'+ph[el]['id']).addClass('text-bold');			
+			}
+		} else {
+			$('#'+ph[el]['id']).addClass('text-error');
+		}		
+	}
+}
+
+///////// Обработка поиска /////////
+$(function () {
+	    $('#search').keypress(function (event) {
+	        if (event.which == '13') {
+	            event.preventDefault();
+	            document.getElementById('searchbtn').click();
+	        }
+	    })
+});
+		
+function searchph() {
+	strph = document.getElementById('search').value;
+	valfil = document.getElementById('fil').value;
+	if (strph != '') {			
+		$.ajax({
+		type: 'get',
+		url: '/phones/phoneslist?searchph='+strph+'&valfil='+valfil+'',
+		crossDomain: true
+		}).done(function(resp) {
+			var ph = resp;	
+			addTable_ph(ph);
+		});
+	}
+}
+
+function clearsearch() {
+	$('#divs').remove();			
+	$('#otdels').show();
+}
+
+function addTable_ph(ph) {
+	$('#divs').remove();			
+	$('#otdels').hide();
+	if (sessionStorage.getItem('idotdclick') != null) {
+		$('i', document.getElementById(sessionStorage.getItem('idotdclick'))).toggleClass("icon-arrow-right icon-arrow-down");
+		$('#tableph').remove();
+		sessionStorage.removeItem('idotdclick');
+	}		
+	let elemhead = document.getElementById('headblock');
+	let divs = document.createElement('div');
+	divs.className = 'column col-8';
+	divs.id = 'divs';
+	let table = document.createElement('table');
+	table.className = 'table';
+	table.id = 'tablephS';
+	divs.appendChild(table)
+	elemhead.after(divs);
+	$('#tablephS').append(`<thead class="text-center">
+									<tr>
+										<th>абонент</th>
+										<th>внешний</th>
+										<th>внутренний</th>
+										<th>отделение</th>
+										<th>ключ. слова</th>
+									</tr>
+								</thead>
+								<tbody></tbody>`);
+	for(el in ph) {
+		
+		if (ph[el]['email'] != '') {
+			var butmail = `<td class="special pop text-center">
+		 							<div class="popover popover-bottom">
+		 								<button type="button" class="btn btn-link"><i class="icon icon-mail"></i></button>
+		 								<div class="popover-container">
+ 											<div class="card">
+ 												<div class="card-body">
+													${ph[el]['email']} 																	
+ 												</div>
+ 											</div>		    														
+ 										</div>	
+		 							</div>	
+		 						</td>`;
+		} else {
+			var butmail = '';	
+		}
+
+	$('#tablephS > tbody').append(`<tr id=${ph[el]['id']} onclick=clicktr("${ph[el]['id']}")>
+													<td class="special">${ph[el]['nameabon']}</td>
+							 						<td class="special text-center">${ph[el]['numberout']}</td>
+							 						<td class="special text-center">${ph[el]['numberin']}</td>
+							 						<td class="special">${ph[el]['otdel']}</td>
+							 						<td class="special">${ph[el]['comment']}</td>
+							 						${butmail}
 												</tr>`);		
 		if (ph[el]['isactive']) {
 			if (ph[el]['isgeneral']) {	

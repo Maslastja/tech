@@ -1,7 +1,6 @@
 from flask import (render_template, request, redirect,
                    url_for, session, jsonify)
 import requests
-import json
 from app.admin.forms import PhoneForm
 from app.models.phones import Phones
 
@@ -25,9 +24,27 @@ def get_filials():
     return fil
 
 
+def get_otdels(valfil):
+    otdels = requests.get(f'http://struc.iood.ru/api/branch/{valfil}/'
+                          'deps?types=hosp,dhosp,amb,reanim,oper,serv,nonmed')
+    otdels = otdels.json()
+    otd = {}
+    # print(otdels)
+    for el in otdels:
+        otd[el['id']] = el['name']
+    return otd
+
+
 def get_phones():
     idotd = request.args.get('idotd')
+    searchph = request.args.get('searchph')
+    valfil = request.args.get('valfil')
+    if searchph:
+        otdels = get_otdels(valfil)
+        searchph = searchph.lower()
+        searchph = searchph.split()
     sel = Phones.select(Phones.id,
+                        Phones.idotd,
                         Phones.isgeneral,
                         Phones.isactive,
                         Phones.comment,
@@ -37,13 +54,14 @@ def get_phones():
                         Phones.email)
     if session.user and 'SYS' in session.user.roles:
         if idotd:
-            sel = sel.where(Phones.idotd == idotd)
+            sel = sel.where((Phones.idotd == idotd) & (Phones.idfil == valfil))
     else:
         if idotd:
             sel = sel.where((Phones.isactive == 1) &
-                            (Phones.idotd == idotd))
+                            (Phones.idotd == idotd) &
+                            (Phones.idfil == valfil))
         else:
-            sel = sel.where(Phones.isactive == 1)
+            sel = sel.where((Phones.isactive == 1) & (Phones.idfil == valfil))
     sel = (sel
            .order_by(Phones.comment,
                      Phones.isgeneral.desc(),
@@ -52,15 +70,34 @@ def get_phones():
 
     phones = []
     for el in sel:
-        phones.append({'id': el.id,
-                       'isgeneral': el.isgeneral,
-                       'isactive': el.isactive,
-                       'comment': el.comment if el.comment else '',
-                       'nameabon': el.nameabon,
-                       'numberin': el.numberin if el.numberin else '',
-                       'numberout': el.numberout if el.numberout else '',
-                       'email': el.email if el.email else ''})
-    #ff = json.dumps(phones)
+        if searchph:
+            add = True
+            for s in searchph:
+                if (el.comment is None or el.comment is not None and
+                        el.comment.lower().find(s) == -1):
+                    add = False
+            if add:
+                elotd = otdels[el.idotd] if otdels.get(el.idotd) else ''
+                elnumbout = el.numberout if el.numberout else ''
+                phones.append({'id': el.id,
+                               'isgeneral': el.isgeneral,
+                               'isactive': el.isactive,
+                               'comment': el.comment if el.comment else '',
+                               'otdel': elotd,
+                               'nameabon': el.nameabon,
+                               'numberin': el.numberin if el.numberin else '',
+                               'numberout': elnumbout,
+                               'email': el.email if el.email else ''})
+        else:
+            phones.append({'id': el.id,
+                           'isgeneral': el.isgeneral,
+                           'isactive': el.isactive,
+                           'comment': el.comment if el.comment else '',
+                           'nameabon': el.nameabon,
+                           'numberin': el.numberin if el.numberin else '',
+                           'numberout': el.numberout if el.numberout else '',
+                           'email': el.email if el.email else ''})
+    print(phones)
 
     return jsonify(phones)
 

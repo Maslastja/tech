@@ -1,4 +1,3 @@
-import json
 from flask import jsonify
 from app.models.types import TypeLinks, TypeNews
 from app.models.links import Link
@@ -48,5 +47,4 @@ def links_ajax(typelink):
                       'fullname': l.fullname,
                       'typelink': l.typelink,
                       'isactive': l.isactive})
-    #links = json.dumps(links)
     return jsonify(links)
