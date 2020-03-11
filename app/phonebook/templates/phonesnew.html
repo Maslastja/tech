@@ -2,24 +2,18 @@
 {% extends "base.html" %}
 {% block content %}
  	<script src={{ url_for('static',filename='js/phones.js') }}></script>  	
-		
 	{% if session.user and 'SYS' in session.user.roles %}
 		<script>
 			function clicktr(idtr) {
-					//let cell = $("td.but", $('#'+idtr));   		
-			  		//if ($("button", cell).length == 0) { 
-					//	$("button.cell", $('table')).remove();					
-			 	//		cell.append(`<button type="submit" class="btn btn-link cell" name="changesub" value=${idtr}><i class="icon icon-edit"></i></button>`);
-			 		//}
-					if ($("td.but", $('#'+idtr)).length == 0) {
-						$(".but", $('table')).remove();					
-						$('#'+idtr).append(`<td class="special but">
-													<button type="submit" class="btn btn-link cell" name="changesub" value=${idtr}><i class="icon icon-edit"></i></button>
-												</td>`);				   		
-						$('#'+idtr).append(`<td class="special but">
-													<button type="submit" class="btn btn-link cell" name="delsub" value=${idtr}><i class="icon icon-delete"></i></button>
-												</td>`);				   		
-			 		}
+				if ($("td.but", $('#'+idtr)).length == 0) {
+					$(".but", $('table')).remove();					
+					$('#'+idtr).append(`<td class="special but">
+												<button type="submit" class="btn btn-link cell" name="changesub" value=${idtr}><i class="icon icon-edit"></i></button>
+											</td>`);				   		
+					$('#'+idtr).append(`<td class="special but">
+												<button type="submit" class="btn btn-link cell" name="delsub" value=${idtr}><i class="icon icon-delete"></i></button>
+											</td>`);				   		
+		 		}
 			}
 		</script>
 	{% else %}	
@@ -28,8 +22,8 @@
 			}
 		</script>
 	{% endif %}
-	<form action='' method='post' novalidate>
-		<div class='columns'>
+	<form class='form-horizontal' action='' method='post' novalidate>
+		<div id='headblock' class='columns'>
 			<div class='column col-2'>	
 				<label for='fil'>филиалы</label>
 				<select id='fil' name='fil' class='form-select' onchange='changesel(); selotd();'>
@@ -48,12 +42,21 @@
 				{% endfor %}
 				</select>
 			</div>
+			<div class='column col-4'>
+				{#<label for 'search'>поиск по ключевым словам</label>#}
+				<span>поиск по ключевым словам</span>
+				<div class='input-group'>
+					<input id='search' type='text' class='form-input'/>
+					<button id='searchbtn' type='button' class='btn btn-primary input-group-btn' onclick='searchph();'><i class="icon icon-search"></i></button>	
+					<button id='searchclear' type='button' class='btn btn-primary input-group-btn' onclick='clearsearch();'><i class="icon icon-cross"></i></button>	
+				</div>
+			</div>
 		</div>
 		<br>
 		{% if session.user and 'SYS' in session.user.roles %}
-			<button type="submit" class="btn btn-link cell" name="addsub"><i class="icon icon-plus"></i> Добавить</button>
+			<button type='submit' class='btn btn-link cell' name='addsub'><i class='icon icon-plus'></i> Добавить</button>
 		{% endif %}
-		<div class='columns otdels'>	
+		<div id='otdels' class='columns otdels'>	
 			<div class='column col-4' id="otdeleniya1"></div>
 			<div class='column col-4' id="otdeleniya2"></div>
 			<div class='column col-4' id="otdeleniya3"></div>

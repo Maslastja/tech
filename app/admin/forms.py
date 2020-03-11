@@ -66,11 +66,11 @@ LinkForm = model_form(Link, exclude=('user', 'createdate', 'changedate'),
 NewsForm = model_form(News, exclude=('user', 'createdate', 'changedate'),
                       field_args={
                         'name': dict(
-                            label='заголовок новости',
+                            label='заголовок',
                             render_kw={'class': 'form-input'},
                             validators=[DataRequired('значение не заполнено')]
                             ),
-                        'typenews': dict(label='тип новости',
+                        'typenews': dict(label='тип',
                                          widget=widgets.Select()),
                         'isactive': dict(label='активная'),
                         'text': dict(
