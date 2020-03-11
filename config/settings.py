@@ -1,7 +1,6 @@
 import os
 
-DATABASE = 'sqliteext:///db_techpage.sqlite'
-DATABASE_URL = 'sqliteext:///db_techpage.sqlite'
+DATABASE = os.getenv('DATABASE_URL')
 SECRET_KEY = os.urandom(24)
 SESSION_COOKIE_NAME = 'sid'
 LOGIN_URL = 'http://auth.iood.ru/user/login?next={}'
