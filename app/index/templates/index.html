@@ -71,36 +71,36 @@
 		{% endif %}
 		</div>
 		<div id='news'>		
-		{% for n in newsall %}
-			<ul class='menu'>
-				<div class='columns'>
-					<div class='column col-10 col-ml-auto'>
-						{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}	
-							<div class='title bg-error'>	
-						{% else %}		
-							<div class='title bg-secondary'>
+			{% for n in newsall %}
+				<ul class='menu'>
+					<div class='columns'>
+						<div class='column col-mr-auto'>
+							{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}	
+								<div class='title bg-error'>	
+							{% else %}		
+								<div class='title bg-secondary'>
+							{% endif %}
+							<b>{{ n.createdate.strftime('%d.%m.%Y %H:%M') }} {{ n.name }}</b>
+							</div>
+						</div>
+						{% if session.user and 'SYS' in session.user.roles %}
+							<div class='column col-1 col-mr-auto'>
+								<button type='submit' class='btn btn-link' name='changenews' value={{ n.id }}>
+									<i class='icon icon-edit'></i>
+								</button>					
+								<button type='submit' class='btn btn-link' name= 'delnews' value = {{ n.id }}>
+									<i class='icon icon-delete'></i>
+								</button>
+							</div>
 						{% endif %}
-						<b>{{ n.createdate.strftime('%d.%m.%Y %H:%M') }} {{ n.name }}</b>
-						</div>
+					</div>	
+					<div class='column col-11'>
+						{{ n.text|safe }}
 					</div>
-					{% if session.user and 'SYS' in session.user.roles %}
-						<div class='column col-2 col-mr-auto'>
-							<button type='submit' class='btn btn-link' name='changenews' value={{ n.id }}>
-								<i class='icon icon-edit'></i>
-							</button>					
-							<button type='submit' class='btn btn-link' name= 'delnews' value = {{ n.id }}>
-								<i class='icon icon-delete'></i>
-							</button>
-						</div>
-					{% endif %}
-				</div>	
-				<div class='column col-11'>
-					{{ n.text|safe }}
-				</div>
-			</ul>	
-		{% endfor %}
+				</ul>	
+			{% endfor %}
 		</div>
-		</form>
+ 	</form>
 	</div>
 	<div class='column col-2'>
 		<div class='accordion'>

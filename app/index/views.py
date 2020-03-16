@@ -36,7 +36,7 @@ def start_page():
 
     return render_template('index.html', title='Техническая страница',
                            linksall=linksall, typesall=typesall,
-                           newsall=newsall, type_id=type_id)
+                           type_id=type_id, newsall=newsall)
 
 
 def open_news():

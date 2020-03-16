@@ -142,6 +142,7 @@ def open_link():
             link.fullname = form.fullname.data
             link.typelink = form.typelink.data
             link.isactive = form.isactive.data
+            link.position = form.position.data
             link.changedate = datetime.today()
             link.user = session.user.id
             link.save()
@@ -151,6 +152,7 @@ def open_link():
                         fullname=form.fullname.data,
                         typelink=form.typelink.data,
                         isactive=form.isactive.data,
+                        position=form.position.data,
                         createdate=d,
                         changedate=d,
                         user=session.user.id)

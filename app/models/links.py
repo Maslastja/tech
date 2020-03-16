@@ -7,6 +7,7 @@ class Link(db.Model):
     linkname = pw.CharField(20, null=False)
     fullname = pw.CharField(150, null=False)
     typelink = pw.ForeignKeyField(TypeLinks, null=False)
+    position = pw.IntegerField(null=False, default=0)
     isactive = pw.BooleanField(default=True)
     user = pw.IntegerField(null=False)
     createdate = pw.DateTimeField()

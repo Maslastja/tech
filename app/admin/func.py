@@ -37,7 +37,7 @@ def links_ajax(typelink):
     if typelink != '':
         sel = sel.where(TypeLinks.id == typelink)
     sel = (sel
-           .order_by(Link.typelink, Link.linkname)
+           .order_by(Link.typelink, Link.position, Link.linkname)
            .namedtuples())
 
     links = []

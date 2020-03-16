@@ -8,6 +8,7 @@
 		<link rel='stylesheet' href={{ url_for('static',filename='css/spectre-icons.css') }} type='text/css' >
 		<link rel='stylesheet' href={{ url_for('static',filename='css/schedule.css') }} type='text/css' >
 		<link rel='stylesheet' href={{ url_for('static',filename='css/phones.css') }} type='text/css' >
+		<link rel='stylesheet' href={{ url_for('static',filename='css/base.css') }} type='text/css' >
  		<script src='//static.iood.ru/jquery/3.4.1/jquery.min.js'></script>
 		{% if session.user and 'SYS' in session.user.roles %}
 			<script src={{ url_for('static',filename='tinymce/tinymce.min.js') }}></script>		
@@ -29,8 +30,7 @@
 	</head>
 	<body>
 		{#{{ session['sid'] }}#}
-		<div class='container'>
-			<div class='columns'>
+ 			<div class='columns navtop'>
 				<div class='column col-1 col-mr-auto'>
 					<a name='navindex' href='/' ><img src={{ url_for('static',filename='img_general/med.png') }} alt={{ url_for('static',filename='img_general/med.png') }} width=70%></a>
 				</div>
@@ -87,8 +87,11 @@
 					</nav>
 				</div>
 			</div>
-			<br>		
-			{% block content %}{% endblock %}
+			<br>
+		<div class='container'>
+			<div class='content'>		
+				{% block content %}{% endblock %}
+			</div>	
 		</div>
 	</body>
 </html>
