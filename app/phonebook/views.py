@@ -84,6 +84,7 @@ def get_phones():
                                'isactive': el.isactive,
                                'comment': el.comment if el.comment else '',
                                'otdel': elotd,
+                               'idotdel': el.idotd if el.idotd else '',
                                'nameabon': el.nameabon,
                                'numberin': el.numberin if el.numberin else '',
                                'numberout': elnumbout,
@@ -97,7 +98,7 @@ def get_phones():
                            'numberin': el.numberin if el.numberin else '',
                            'numberout': el.numberout if el.numberout else '',
                            'email': el.email if el.email else ''})
-    print(phones)
+#    print(phones)
 
     return jsonify(phones)
 
@@ -152,7 +153,7 @@ def open_phone():
         form.otd.choices = [('', '')]
 
     form.fil.choices = [(f, fil[f]) for f in fil]
-    form.typeotd.choices = [(t, types[t]) for t in types]
+    form.typeotd.choices = [('', 'все')]+[(t, types[t]) for t in types]
 
     if request.method == 'POST':
         # т.к. список был динамически изменен выборку принудительно подзаменяем

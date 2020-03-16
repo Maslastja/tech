@@ -32,3 +32,13 @@ a.linksotd {
 	white-space: pre-wrap;
 }
 
+/*размеры для поиска телефонов*/
+th.l,
+td.l {
+  	width: 35vw;
+}
+
+th.s,
+td.s {
+  	width: 15vw;
+}

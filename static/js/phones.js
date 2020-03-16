@@ -7,10 +7,19 @@ function changesel() {
 	  	sessionStorage.removeItem('idotdclick');
 	}	
 }	
+
+function changeTypeOtd() {
+	var chotd = document.getElementById('otd').value;
+	var chtype = chotd.split('.');
+	var objType = document.getElementById('typeotd');
+	if (objType.value != chtype[1]) {	
+		objType.value=chtype[1];
+	}
+}	
+
 	
 function getphones(idotd) {
 	$('#tableph').remove();
-	
 	//поиск всех ссылок по классу linksotd		
 	var i, links = document.querySelectorAll('.linksotd');
 	for(i = 0; i < links.length; i++) {
@@ -46,7 +55,9 @@ function getphones(idotd) {
 				}
 			}	
 		});
+	return false;
 }			
+
 
 function selotd() {
 	$("#tableph > tbody").empty();
@@ -105,7 +116,7 @@ function selotd() {
 				} else {
 					var colotd = '#otdeleniya3';
 				}
-				$(colotd).append('<a href="#" id='+employees[el]['id']+' onclick=getphones("'+employees[el]['id']+'") class="linksotd text-dark text-bold"><i class="icon icon-arrow-right"></i>'+employees[el]['name']+'</a>');					
+				$(colotd).append('<a href="javascript: void 0" id='+employees[el]['id']+' onclick=getphones("'+employees[el]['id']+'") class="linksotd text-dark text-bold"><i class="icon icon-arrow-right"></i>'+employees[el]['name']+'</a>');					
 				//$('<a>', { href: '#', text: employees[el]['name'], id: employees[el]['id'], onclick: 'getphones("'+employees[el]['id']+'")', class: 'linksotd' }).appendTo(colotd);
 				$(colotd).append('<br>');
 				//$('<br>').appendTo(colotd);
@@ -261,11 +272,13 @@ function searchph() {
 
 function clearsearch() {
 	$('#divs').remove();			
+	$('#brsch').remove();			
 	$('#otdels').show();
 }
 
 function addTable_ph(ph) {
 	$('#divs').remove();			
+	$('#brsch').remove();			
 	$('#otdels').hide();
 	if (sessionStorage.getItem('idotdclick') != null) {
 		$('i', document.getElementById(sessionStorage.getItem('idotdclick'))).toggleClass("icon-arrow-right icon-arrow-down");
@@ -273,21 +286,24 @@ function addTable_ph(ph) {
 		sessionStorage.removeItem('idotdclick');
 	}		
 	let elemhead = document.getElementById('headblock');
+	let brel = document.createElement('br');
+	brel.id = 'brsch';	
 	let divs = document.createElement('div');
-	divs.className = 'column col-8';
+	divs.className = 'column col-8 col-mx-auto';
 	divs.id = 'divs';
 	let table = document.createElement('table');
 	table.className = 'table';
 	table.id = 'tablephS';
 	divs.appendChild(table)
-	elemhead.after(divs);
+	divs.after(brel);
+	elemhead.after(brel);
+	brel.after(divs);
 	$('#tablephS').append(`<thead class="text-center">
 									<tr>
 										<th>абонент</th>
 										<th>внешний</th>
 										<th>внутренний</th>
 										<th>отделение</th>
-										<th>ключ. слова</th>
 									</tr>
 								</thead>
 								<tbody></tbody>`);
@@ -311,11 +327,12 @@ function addTable_ph(ph) {
 		}
 
 	$('#tablephS > tbody').append(`<tr id=${ph[el]['id']} onclick=clicktr("${ph[el]['id']}")>
-													<td class="special">${ph[el]['nameabon']}</td>
-							 						<td class="special text-center">${ph[el]['numberout']}</td>
-							 						<td class="special text-center">${ph[el]['numberin']}</td>
-							 						<td class="special">${ph[el]['otdel']}</td>
-							 						<td class="special">${ph[el]['comment']}</td>
+													<td class="special l">${ph[el]['nameabon']}</td>
+							 						<td class="special s text-center">${ph[el]['numberout']}</td>
+							 						<td class="special s text-center">${ph[el]['numberin']}</td>
+							 						<td class="special l">
+							 							<a href='javascript: void 0' onclick='clearsearch(); getphones("${ph[el]['idotdel']}"); scrlel("${ph[el]['idotdel']}")'>${ph[el]['otdel']}</a>
+							 						</td>
 							 						${butmail}
 												</tr>`);		
 		if (ph[el]['isactive']) {
@@ -328,3 +345,9 @@ function addTable_ph(ph) {
 	}
 }
 
+function scrlel(elem) {
+	let scr = document.getElementById(elem).offsetTop;
+	if (scr >= window.screen.availHeight) {	
+		window.scroll(0, scr);
+	}
+}

@@ -107,6 +107,7 @@ def test_dbtable_links(client):
                             'fullname': 'new',
                             'typelink': 1,
                             'user': 1,
+                            'position': 0,
                             'createdate': datetime.today(),
                             'changedate': datetime.today(),
                             'isactive': True},

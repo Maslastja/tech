@@ -10,23 +10,23 @@ def get_links_for_base():
     ood = list(Link.select().where((Link.typelink.typecode == 1) &
                                    (Link.isactive == 1) &
                                    (TypeLinks.isactive == 1))
-               .join(TypeLinks).order_by(Link.linkname))
+               .join(TypeLinks).order_by(Link.position, Link.linkname))
     zdrav = list(Link.select().where((TypeLinks.typecode == 2) &
                                      (Link.isactive == 1) &
                                      (TypeLinks.isactive == 1))
-                 .join(TypeLinks).order_by(Link.linkname))
+                 .join(TypeLinks).order_by(Link.position, Link.linkname))
     dop = list(Link.select().where((TypeLinks.typecode == 3) &
                                    (Link.isactive == 1) &
                                    (TypeLinks.isactive == 1))
-               .join(TypeLinks).order_by(Link.linkname))
+               .join(TypeLinks).order_by(Link.position, Link.linkname))
     files = list(Link.select().where((TypeLinks.typecode == 4) &
                                      (Link.isactive == 1) &
                                      (TypeLinks.isactive == 1))
-                 .join(TypeLinks).order_by(Link.linkname))
+                 .join(TypeLinks).order_by(Link.position, Link.linkname))
     video = list(Link.select().where((TypeLinks.typecode == 5) &
                                      (Link.isactive == 1) &
                                      (TypeLinks.isactive == 1))
-                 .join(TypeLinks).order_by(Link.linkname))
+                 .join(TypeLinks).order_by(Link.position, Link.linkname))
 
     linksall = {'ood': ood,
                 'zdrav': zdrav,

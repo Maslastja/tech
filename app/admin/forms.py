@@ -1,5 +1,6 @@
 from wtforms import widgets, SelectField, BooleanField
-from wtforms.validators import ValidationError, DataRequired, Email
+from wtforms.validators import (ValidationError, DataRequired, Email,
+                                InputRequired)
 from wtfpeewee.orm import model_form
 from app.models.types import TypeLinks
 from app.models.links import Link
@@ -59,6 +60,12 @@ LinkForm = model_form(Link, exclude=('user', 'createdate', 'changedate'),
                             validators=[DataRequired('значение не заполнено')]
                             ),
                         'typelink': dict(label='тип ссылки'),
+                        'position': dict(
+                            label='порядковый номер',
+                            render_kw={'class': 'form-input',
+                                       'type': 'number'},
+                            validators=[InputRequired('значение не заполнено')]
+                            ),
                         'isactive': dict(label='активная')
                       })
 
@@ -153,11 +160,11 @@ PhoneForm.fil = SelectField(
 PhoneForm.typeotd = SelectField(
     'тип отделения',
     render_kw={'class': 'form-select', 'onchange': 'selotdPhoneForm()'},
-    validators=[DataRequired('значение не выбрано')]
+    validators=[InputRequired('значение не выбрано')]
 )
 PhoneForm.otd = SelectField(
     'отделение',
-    render_kw={'class': 'form-select'},
+    render_kw={'class': 'form-select', 'onchange': 'changeTypeOtd()'},
     validators=[DataRequired('значение не выбрано')]
 )
 PhoneForm.isactive = BooleanField('активный', default=True)
