@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, request, session
+from playhouse.flask_utils import PaginatedQuery
 from datetime import datetime
 
 from app.index.func import get_links_for_base, get_types_news, get_news
@@ -6,10 +7,16 @@ from app.admin.forms import NewsForm
 from app.models.news import News
 
 
+# количество записей выдаваемы на странице
+len_on_page = {1: 10, 2: 20, 3: 30}
+
+
 def start_page():
     linksall = get_links_for_base()
     typesall = get_types_news()
     arg_type = request.args.get('type_id')
+    arg_page = request.args.get('page', type=int, default=1)
+    arg_lenpg = request.args.get('lenpg', type=int, default=10)
     if arg_type:
         newsall = get_news(int(arg_type))
         type_id = int(arg_type)
@@ -34,9 +41,13 @@ def start_page():
 
         return redirect(url)
 
+    paginate = PaginatedQuery(newsall, arg_lenpg, page=arg_page)
+
     return render_template('index.html', title='Техническая страница',
                            linksall=linksall, typesall=typesall,
-                           type_id=type_id, newsall=newsall)
+                           type_id=type_id, newsall=paginate.get_object_list(),
+                           pgcount=paginate.get_page_count(), curpage=arg_page,
+                           len_on_page=len_on_page, lenpg=arg_lenpg)
 
 
 def open_news():

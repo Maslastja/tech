@@ -1,6 +1,22 @@
 {% set navname = 'navindex' %}
 {% extends 'base.html' %}
 {% block content %}
+<script type= "text/javascript">
+function reloadPage() {
+	var lenel = document.getElementById('len');
+	var params = document.location.search;
+	var loc = document.location.href;
+	if (params != '') {
+		if (params.indexOf('lenpg') == -1) { 
+			document.location.href = loc + '&lenpg=' + lenel[lenel.value-1].innerHTML + '';
+		} else {
+			document.location.href = loc.substr(0,loc.indexOf('lenpg')) + 'lenpg=' + lenel[lenel.value-1].innerHTML + ''	
+		}
+	} else {
+		document.location.href = loc + '?lenpg=' + lenel[lenel.value-1].innerHTML + '';
+	}
+}
+</script>
 <div class='columns'>			
 	<div class='column col-2'>
 		<div class='accordion'>
@@ -49,30 +65,50 @@
 		<nav class='navbar'>
 			<section class='navbar-section'>
 				{% if type_id == 0 %}
-					<span class='chip'><a href='/' class='btn btn-link active'>#все</a></span>
+					<span class='chip'><a href={{ url_for('index.start_page', lenpg = lenpg) }} class='btn btn-link active'>#все</a></span>
 				{% else %}					
-					<a href='/' class='btn btn-link'>#все</a>
+					<a href={{ url_for('index.start_page', lenpg = lenpg) }} class='btn btn-link'>#все</a>
 				{% endif %}				
 				{% for t in typesall %}
 					{% if type_id == t.id %}
-						<span class='chip'><a href={{ url_for('index.start_page', type_id = t.id) }} class='btn btn-link active'>{{ '#'+t.typename }}</a></span>
+						<span class='chip'><a href={{ url_for('index.start_page', type_id = t.id, lenpg = lenpg) }} class='btn btn-link active'>{{ '#'+t.typename }}</a></span>
 					{% else %}
-						<a href={{ url_for('index.start_page', type_id = t.id) }} class='btn btn-link'>{{ '#'+t.typename }}</a>
+						<a href={{ url_for('index.start_page', type_id = t.id, lenpg = lenpg) }} class='btn btn-link'>{{ '#'+t.typename }}</a>
 					{% endif %}
 				{% endfor %}
 			</section>
+			<section class='navbar-section'>
+				<div class='col-2 col-ml-auto'>		
+					<select id='len' class='form-select' onchange='reloadPage()'>
+						{% for n in len_on_page %}
+							{% if lenpg == len_on_page[n] %}
+								<option value='{{ n }}' selected=''>{{ len_on_page[n] }}</option>
+							{% else %}
+								<option value='{{ n }}'>{{ len_on_page[n] }}</option>
+							{% endif %}	
+						{% endfor %}
+					</select>
+				</div>
+			</section>	
 		</nav>
-		{% if session.user and 'SYS' in session.user.roles %}
-		<div class='panel-header'>
-			<button type='submit' class='btn btn-link' name='addnews'>
-				<i class='icon icon-plus'></i> Добавить запись
-			</button>
+			<div class='columns'>
+				{% if session.user and 'SYS' in session.user.roles %}
+				<div class='columl col-2'>		
+					<button type='submit' class='btn btn-link' name='addnews'>
+						<i class='icon icon-plus'></i> Добавить запись
+					</button>
+				</div>
+				{% endif %}
+			</div>
 		</div>
-		{% endif %}
-		</div>
+		
 		<div id='news'>		
 			{% for n in newsall %}
-				<ul class='menu'>
+				{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}				
+					<ul id='arch' class='menu'>
+				{% else %}
+					<ul id='act' class='menu'>
+				{% endif %}		
 					<div class='columns'>
 						<div class='column col-mr-auto'>
 							{% if session.user and 'SYS' in session.user.roles and n.isactive == False %}	
@@ -89,7 +125,7 @@
 									<i class='icon icon-edit'></i>
 								</button>					
 								<button type='submit' class='btn btn-link' name= 'delnews' value = {{ n.id }}>
-									<i class='icon icon-delete'></i>
+									<i class='icon icon-cross'></i>
 								</button>
 							</div>
 						{% endif %}
@@ -99,6 +135,7 @@
 					</div>
 				</ul>	
 			{% endfor %}
+			{% include 'pag.html' %}
 		</div>
  	</form>
 	</div>

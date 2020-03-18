@@ -80,5 +80,4 @@ def get_news(typenews=None):
                          on=(News.typenews_id == TypeNews.id))
                    .order_by(News.createdate.desc()))
 
-    news = list(sel)
-    return news
+    return sel

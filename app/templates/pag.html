@@ -1,0 +1,55 @@
+	{% if pgcount > 1 %}
+		<ul class="pagination">
+			{% if curpage == 1 %}
+				<li class="page-item disabled">
+			   	<a href='#'><i class="icon icon-arrow-left"></i></a>
+			  	</li>
+				<li class="page-item active">
+			   	<a href={{ url_for('index.start_page', page = curpage, type_id = type_id, lenpg = lenpg) }}>{{ curpage }}</a>
+			  	</li>
+			{% else %}
+				<li class="page-item">
+			   	<a href={{ url_for('index.start_page', page = curpage-1, type_id = type_id, lenpg = lenpg) }}><i class="icon icon-arrow-left"></i></a>
+			  	</li>
+				<li class="page-item">
+			   	<a href={{ url_for('index.start_page', page = 1, type_id = type_id, lenpg = lenpg) }}>1</a>
+			  	</li>
+			{% endif %}
+			{% if curpage > 2 and curpage-1 != 2 %}
+				<li class="page-item">
+			   <a href='#'>...</a>
+			  	</li>
+			{% endif %}
+			{% for i in range(1,pgcount+1) %}
+				{% if (i >= curpage-1 and i <= curpage+1) and i != 1 and i != pgcount  %}
+					{% if i == curpage %}
+					   <li class="page-item active">
+				   {% else %}
+				   	<li class="page-item">
+					{% endif %}
+				   <a href={{ url_for('index.start_page', page = i, type_id = type_id, lenpg = lenpg) }}>{{ i }}</a>
+				  	</li>
+			  	{% endif %}
+		  	{% endfor %}
+			{% if curpage < pgcount-2 and curpage+2 != pgcount %}
+				<li class="page-item">
+			   <a href='#'>...</a>
+			  	</li>
+			{% endif %}
+			{% if curpage == pgcount %}
+				<li class="page-item active">
+			   	<a href={{ url_for('index.start_page', page = curpage, type_id = type_id, lenpg = lenpg) }}>{{ curpage }}</a>
+			  	</li>
+				<li class="page-item disabled">
+			   	<a href='#'><i class="icon icon-arrow-right"></i></a>
+			  	</li>
+			{% else %}
+				<li class="page-item">
+			   	<a href={{ url_for('index.start_page', page = pgcount, type_id = type_id, lenpg = lenpg) }}>{{ pgcount }}</a>
+			  	</li>
+				<li class="page-item">
+			   	<a href={{ url_for('index.start_page', page = curpage+1, type_id = type_id, lenpg = lenpg) }}><i class="icon icon-arrow-right"></i></a>
+			  	</li>
+			{% endif %}
+		</ul>
+	{% endif %}	
