@@ -36,7 +36,8 @@ function getphones(idotd) {
 		//запрос на получение телефонных номеров из БД		
 		$.ajax({
 		type: 'get',
-		url: '/phones/phoneslist?idotd='+idotd+'&valfil='+filval+'',
+		url: document.location.href+'phoneslist?idotd='+idotd+'&valfil='+filval+'',
+		//'http://tech.iood.ru:5000/phones/phoneslist?idotd='+idotd+'&valfil='+filval+'',
 		crossDomain: true
 		}).done(function(resp) {
 			var ph = resp;	
@@ -261,7 +262,8 @@ function searchph() {
 	if (strph != '') {			
 		$.ajax({
 		type: 'get',
-		url: '/phones/phoneslist?searchph='+strph+'&valfil='+valfil+'',
+		url: document.location.href+'phoneslist?searchph='+strph+'&valfil='+valfil+'',
+		//url: '/phones/phoneslist?searchph='+strph+'&valfil='+valfil+'',
 		crossDomain: true
 		}).done(function(resp) {
 			var ph = resp;	

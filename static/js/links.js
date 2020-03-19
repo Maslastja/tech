@@ -16,7 +16,8 @@ function get_links() {
 		//запрос на получение значений по отбору БД		
 		$.ajax({
 		type: 'get',
-		url: '/admin/get_links?typelink='+valtype+'',
+		url: document.location.href+'/get_links?typelink='+valtype+'',		
+		//url: '/admin/links/get_links?typelink='+valtype+'',
 		crossDomain: true
 		}).done(function(resp) {
 			var query = resp;	
