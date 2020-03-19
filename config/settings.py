@@ -1,6 +1,6 @@
 import os
 
-DATABASE = os.getenv('DATABASE_URL')
+DATABASE = os.getenv('DATABASE_URL_SQLITE')
 SECRET_KEY = os.urandom(24)
 SESSION_COOKIE_NAME = 'sid'
 LOGIN_URL = 'http://auth.iood.ru/user/login?next={}'
