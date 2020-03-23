@@ -47,7 +47,7 @@ def test_res200_links(client):
     res = client.get('/admin/links/link')
     assert res.status_code == 200
 
-    res = client.get('/admin/get_links')
+    res = client.get('/admin/links/get_links')
     assert res.status_code == 200
 
 
