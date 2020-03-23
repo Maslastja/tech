@@ -106,7 +106,7 @@ def get_phones():
 def phonesnew():
     fil = get_filials()
 
-    resp = render_template('phonesnew.html', title='телефонный справочник',
+    resp = render_template('phonesnew.html', title='Телефонный справочник',
                            fil=fil, types=types)
     if request.method == 'POST':
         if 'changesub' in request.form:
