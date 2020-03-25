@@ -108,21 +108,24 @@ function selotd() {
 			}
 			var i = 0;							
 			for(el in employees) {
-				if ($('#otd').length == 0) {
-				i++;
-				if (i <= strcount*1) {
-					var colotd = '#otdeleniya1';		
-				} else if (i <= strcount*2) {
-					var colotd = '#otdeleniya2';	
-				} else {
-					var colotd = '#otdeleniya3';
-				}
-				$(colotd).append('<a href="javascript: void 0" id='+employees[el]['id']+' onclick=getphones("'+employees[el]['id']+'") class="linksotd text-dark text-bold"><i class="icon icon-arrow-right"></i>'+employees[el]['name']+'</a>');					
-				//$('<a>', { href: '#', text: employees[el]['name'], id: employees[el]['id'], onclick: 'getphones("'+employees[el]['id']+'")', class: 'linksotd' }).appendTo(colotd);
-				$(colotd).append('<br>');
-				//$('<br>').appendTo(colotd);
-				} else {
-					objSel.append(new Option(employees[el]['name'], employees[el]['id']));
+				// условие на исключение дневных стационаров из списка, кроме ДС противоопухолевой лекарственной терапии
+				if (employees[el]['id'].indexOf('dhosp') == -1 | employees[el]['id'].indexOf('dhosp.43') != -1) {
+					if ($('#otd').length == 0) {
+					i++;
+					if (i <= strcount*1) {
+						var colotd = '#otdeleniya1';		
+					} else if (i <= strcount*2) {
+						var colotd = '#otdeleniya2';	
+					} else {
+						var colotd = '#otdeleniya3';
+					}
+					$(colotd).append('<a href="javascript: void 0" id='+employees[el]['id']+' onclick=getphones("'+employees[el]['id']+'") class="linksotd text-dark text-bold"><i class="icon icon-arrow-right"></i>'+employees[el]['name']+'</a>');					
+					//$('<a>', { href: '#', text: employees[el]['name'], id: employees[el]['id'], onclick: 'getphones("'+employees[el]['id']+'")', class: 'linksotd' }).appendTo(colotd);
+					$(colotd).append('<br>');
+					//$('<br>').appendTo(colotd);
+					} else {
+						objSel.append(new Option(employees[el]['name'], employees[el]['id']));
+					}
 				}
 			}
 			if ($('#otd').length != 0) {
@@ -167,7 +170,10 @@ function selotdPhoneForm() {
 			  return 0;
 			});			
 				for(el in employees) {
+					// условие на исключение дневных стационаров из списка, кроме ДС противоопухолевой лекарственной терапии
+					if (employees[el]['id'].indexOf('dhosp') == -1 | employees[el]['id'].indexOf('dhosp.43') != -1) {
 						objSel.append(new Option(employees[el]['name'], employees[el]['id']));
+					}
 				}
 				if (objSel.options.length == 0) {
 					objSel.append(new Option('', ''));
