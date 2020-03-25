@@ -101,7 +101,13 @@ function selotd() {
 			$("#otdeleniya2").empty();
 			$("#otdeleniya3").empty();
 			//подсчет количества строк в столбце
-			var allstr = resp.length;
+			//var allstr = resp.length;
+			var allstr = 0;
+			for(el in employees) {
+				if (employees[el]['id'].indexOf('dhosp') == -1 | employees[el]['id'].indexOf('dhosp.43') != -1) {
+					allstr ++;
+				}
+			}
 			var strcount = Math.floor(allstr/3);
 			if (allstr > strcount*3) {
 				strcount++;
