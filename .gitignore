@@ -7,3 +7,4 @@ img
 files
 db_techpage.sqlite
 .pytest_cache
+tech_page.ini
