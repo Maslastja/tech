@@ -196,7 +196,9 @@ function addTable(ph, idotd) {
 	let table = document.createElement('table');
 	table.className = 'table';
 	table.id = 'tableph';
-	elem.after(table);
+	//elem.after(table);
+	//.after заменяется на более старый вариант т к браузеры ff v47 не поддерживают этот метод	
+	elem.parentNode.insertBefore(table, elem.nextElementSibling);
 	$('#tableph').append(`<thead class="text-center">
 									<tr>
 										<th>абонент</th>
@@ -299,19 +301,21 @@ function addTable_ph(ph) {
 		$('#tableph').remove();
 		sessionStorage.removeItem('idotdclick');
 	}		
-	let elemhead = document.getElementById('headblock');
+	let elempar = document.getElementById('searchtable');
 	let brel = document.createElement('br');
 	brel.id = 'brsch';	
 	let divs = document.createElement('div');
-	divs.className = 'column col-8 col-mx-auto';
+	divs.className = 'column col-12 col-mx-auto';
 	divs.id = 'divs';
 	let table = document.createElement('table');
 	table.className = 'table';
 	table.id = 'tablephS';
-	divs.appendChild(table)
-	divs.after(brel);
-	elemhead.after(brel);
-	brel.after(divs);
+	divs.appendChild(table);
+	elempar.appendChild(divs);
+	elempar.appendChild(brel);
+	//divs.after(brel);
+	//elemhead.after(brel);
+	//brel.after(divs);
 	$('#tablephS').append(`<thead class="text-center">
 									<tr>
 										<th>абонент</th>

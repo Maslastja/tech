@@ -40,7 +40,14 @@ $(document).ready( function(){
 				sessionStorage.removeItem('typelink');
 			}		
 		}	
-	}	
+	}
+	$('.newstext').readmore({
+  		speed: 700,
+   	collapsedHeight: 300,
+  		moreLink: '<div class="column col-2 col-mx-auto"><a class="btn btn-sm" href="#">Подробнее</a></div>',
+  		lessLink: '<div class="column col-2 col-mx-auto"><a class="btn btn-sm" href="#">Свернуть</a></div>',
+  		embedCSS: false,
+ 	});	
 });
 
 function logout() {

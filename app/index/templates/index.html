@@ -2,20 +2,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <script type= "text/javascript">
-function reloadPage() {
-	var lenel = document.getElementById('len');
-	var params = document.location.search;
-	var loc = document.location.href;
-	if (params != '') {
-		if (params.indexOf('lenpg') == -1) { 
-			document.location.href = loc + '&lenpg=' + lenel[lenel.value-1].innerHTML + '';
+	function reloadPage() {
+		var lenel = document.getElementById('len');
+		var params = document.location.search;
+		var loc = document.location.href;
+		if (params != '') {
+			if (params.indexOf('lenpg') == -1) { 
+				document.location.href = loc + '&lenpg=' + lenel[lenel.value-1].innerHTML + '';
+			} else {
+				document.location.href = loc.substr(0,loc.indexOf('lenpg')) + 'lenpg=' + lenel[lenel.value-1].innerHTML + ''	
+			}
 		} else {
-			document.location.href = loc.substr(0,loc.indexOf('lenpg')) + 'lenpg=' + lenel[lenel.value-1].innerHTML + ''	
+			document.location.href = loc + '?lenpg=' + lenel[lenel.value-1].innerHTML + '';
 		}
-	} else {
-		document.location.href = loc + '?lenpg=' + lenel[lenel.value-1].innerHTML + '';
 	}
-}
 </script>
 <div class='columns'>			
 	<div class='column col-2'>
@@ -130,7 +130,7 @@ function reloadPage() {
 							</div>
 						{% endif %}
 					</div>	
-					<div class='column col-11'>
+					<div class='column col-11 newstext'>
 						{{ n.text|safe }}
 					</div>
 				</ul>	
