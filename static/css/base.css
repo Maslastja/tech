@@ -11,3 +11,13 @@ div.navtop{
 div.content{
   padding-top: 50px;
 }
+
+button.exit {
+	text-align: right;
+	font-size: small;
+	white-space: normal;
+}
+
+div.alright {
+	text-align: right;
+}

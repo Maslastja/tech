@@ -35,7 +35,7 @@
 				<div class='column col-1 col-mr-auto'>
 					<a name='navindex' href='/' ><img src={{ url_for('static',filename='img_general/med.png') }} alt={{ url_for('static',filename='img_general/med.png') }} width=70%></a>
 				</div>
-				<div class='column col-11 col-mr-auto'>
+				<div class='column col-8 col-mr-auto'>
 					<nav class='navbar'>
 						<section class='navbar-section'>
 							<ul class='tab'>
@@ -78,14 +78,21 @@
 								{% endif %}
 							</ul>
 						</section>
-						<section class='navbar-section'>							
+						{#<section class='navbar-section'>							
 							{% if session.user %}
 								<button id='logout' class='btn btn-link' onclick='logout()'>{{ session.user.sign }} | Выход</button>
 							{% else %}
 								<a id='logout' href={{ url_for('auth.login') }} class='btn btn-link'>Вход</a>
 							{% endif %}
-						</section>
+						</section>#}
 					</nav>
+				</div>
+				<div class='column col-3 col-ml-auto alright'>							
+					{% if session.user %}
+						<button id='logout' class='btn btn-link exit' onclick='logout()'>{{ session.user.sign }}<br>Выход</button>
+					{% else %}
+						<a id='logout' href={{ url_for('auth.login') }} class='btn btn-link exit'>Вход</a>
+					{% endif %}
 				</div>
 			</div>
 			<br>
