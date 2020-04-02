@@ -22,10 +22,15 @@ function get_links() {
 		}).done(function(resp) {
 			var query = resp;	
 			for (el in query) {
+				let actl = 'Нет';
+				if (query[el]['isactive']) {
+					actl = 'Да';				
+				}
 				$('#list').append(`<tr>
 										  	<td>${query[el]['linkname']}</td>
 							 				<td>${query[el]['fullname']}</td>
 							 				<td>${query[el]['typelink']}</td>
+							 				<td class='text-center'>${actl}</td>
 											<td class='text-center'>
 												<button type='submit' class='btn btn-link' name='changesub' value=${query[el]['id']}>
 													<i class='icon icon-edit'></i>
